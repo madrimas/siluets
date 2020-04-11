@@ -1,0 +1,27 @@
+{
+  "name": "siluets",
+  "version": "1.0.0",
+  "description": "Workout diary ",
+  "main": "index.js",
+  "dependencies": {
+    "vue": "^2.6.11",
+    "webpack": "^4.42.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madrimas/siluets.git"
+  },
+  "keywords": [
+    "workout"
+  ],
+  "author": "Stachowicz, Zapiorkowski, Wieniecki",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/madrimas/siluets/issues"
+  },
+  "homepage": "https://github.com/madrimas/siluets#readme"
+}
