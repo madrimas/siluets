@@ -10,8 +10,8 @@ export default new Router({
         component: () => import("@/views/Home"),
         children: [
           {
-            path: "",
-            name: "home",
+            path: "home-global",
+            name: "home-global",
             component: () => import("@/views/HomeGlobal")
           }
         ]

@@ -9,7 +9,7 @@ const getters = {
 }
 
 const actions = {
-    [ACTION_NAME]()
+    // [ACTION_NAME]()
 }
 
 export default {
