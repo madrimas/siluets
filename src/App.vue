@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    
-    <router-view></router-view>
-    
+   <router-view></router-view>
   </div>
 </template>
 
@@ -10,12 +8,14 @@
 // import RwvHeader from "@/components/TheHeader";
 // import RwvFooter from "@/components/TheFooter";
 export default {
-  name: "App",
-//   components: {
-//     RwvHeader,
-//     RwvFooter
-//   }
+  name: "App"
+  //   components: {
+  //     RwvHeader,
+  //     RwvFooter
+  //   }
 };
 </script>
 
-<style></style>
+<style lang="sass">
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons");
+</style>

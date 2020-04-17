@@ -10,9 +10,24 @@ export default new Router({
         component: () => import("@/views/Home"),
         children: [
           {
-            path: "home-global",
-            name: "home-global",
-            component: () => import("@/views/HomeGlobal")
+            path: "training/",
+            name: "training",
+            component: () => import("@/views/Training")
+          },
+          {
+            path: "presets/",
+            name: "presets",
+            component: () => import("@/views/Presets")
+          },
+          {
+            path: "measurements/",
+            name: "measurements",
+            component: () => import("@/views/Measurements")
+          },
+          {
+            path: "progress/",
+            name: "training-progress",
+            component: () => import("@/views/Progress")
           }
         ]
       }
