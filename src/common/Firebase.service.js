@@ -1,4 +1,7 @@
 import Vue from "vue";
+import { firebaseConfig } from '@/config/firebase.config';
+
+import * as firebase from "firebase/app";
 
 const FirebaseService = {
     init() {

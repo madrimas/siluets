@@ -1,28 +1,15 @@
 <template>
   <div>
     <md-progress-spinner
-      class="center-spinner"
-      v-if="exercises == null"
-      :md-diameter="100"
-      :md-stroke="10"
-      md-mode="indeterminate"
+      class="center-spinner" v-if="exercises == null" :md-diameter="100" :md-stroke="10" md-mode="indeterminate"
     ></md-progress-spinner>
-    <md-empty-state
-      v-else-if="exercises.length === 0"
-      class="md-accent"
-      md-rounded
+    <md-empty-state v-else-if="exercises.length === 0" class="md-accent" md-rounded
       md-icon="clear"
       md-label="No workout assigned to preset"
       md-description="Assign preset in presets tab and then use it."
     ></md-empty-state>
     <md-steppers md-vertical v-else-if="exercises.length > 0">
-      <md-step
-        v-for="ex in exercises"
-        :key="ex.id"
-        :md-label="ex.displayName"
-        :md-description="ex.description"
-        v-on:click="changeExercise(ex)"
-      >
+      <md-step v-for="ex in exercises" :key="ex.id" :md-label="ex.displayName" :md-description="ex.description" v-on:click="changeExercise(ex)">
         <span class="md-subheading">Current set {{ currentSet }}</span>
 
         <md-field>
@@ -40,11 +27,7 @@
         <md-button class="md-raised md-primary" v-on:click="endSingleSet(ex)">Set done</md-button>
         <md-button class="md-raised md-accent" v-on:click="backOneSet(ex)">Back</md-button>
 
-        <md-snackbar
-          md-position="center"
-          :md-duration="duration"
-          :md-active="showSnackbar"
-          md-persistent
+        <md-snackbar md-position="center" :md-duration="duration" :md-active="showSnackbar" md-persistent
         >
           <span>You have to enter number of reps and weight</span>
           <md-button class="md-primary" @click="closeSnackbar">OK</md-button>
@@ -55,30 +38,10 @@
 
     <div class="bottom-bar">
       <md-bottom-bar md-type="shift">
-        <md-bottom-bar-item
-          id="bottom-bar-item-training-1"
-          md-label="Training 1"
-          md-icon="looks_one"
-          @click="presetChange(1)"
-        ></md-bottom-bar-item>
-        <md-bottom-bar-item
-          id="bottom-bar-item-training-2"
-          md-label="Training 2"
-          md-icon="looks_two"
-          @click="presetChange(2)"
-        ></md-bottom-bar-item>
-        <md-bottom-bar-item
-          id="bottom-bar-item-training-3"
-          md-label="Training 3"
-          md-icon="looks_3"
-          @click="presetChange(3)"
-        ></md-bottom-bar-item>
-        <md-bottom-bar-item
-          id="bottom-bar-item-training-4"
-          md-label="Training 4"
-          md-icon="looks_4"
-          @click="presetChange(4)"
-        ></md-bottom-bar-item>
+        <md-bottom-bar-item id="bottom-bar-item-training-1" md-label="Training 1" md-icon="looks_one" @click="presetChange(1)"/>
+        <md-bottom-bar-item id="bottom-bar-item-training-2" md-label="Training 2" md-icon="looks_two" @click="presetChange(2)"/>
+        <md-bottom-bar-item id="bottom-bar-item-training-3" md-label="Training 3" md-icon="looks_3" @click="presetChange(3)" />
+        <md-bottom-bar-item id="bottom-bar-item-training-4" md-label="Training 4" md-icon="looks_4" @click="presetChange(4)" />
       </md-bottom-bar>
     </div>
   </div>
