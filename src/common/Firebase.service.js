@@ -12,6 +12,7 @@ const FirebaseService = {
                 displayName: "Deadlift",
                 description: "Lifthing weight from the floor",
                 defaultSeries: 4,
+                setsDone: 0,
                 defaultReps: 12,
                 userSeries: 0,
                 userReps: [], //this array length must be equal to userSeries
@@ -24,8 +25,9 @@ const FirebaseService = {
                 name: "bench-press",
                 displayName: "Bench press",
                 description: "Pushing bar when lying on the bench",
-                defaultSeries: 4,
-                defaultReps: 12,
+                defaultSeries: 3,
+                defaultReps: 10,
+                setsDone: 0,
                 userSeries: 0,
                 userReps: [], //this array length must be equal to userSeries
                 weights: [] //same as above
@@ -36,9 +38,10 @@ const FirebaseService = {
                 id: 'bf1',
                 name: "butterfly",
                 displayName: "Butterfly",
-                description: "Chest excercise",
-                defaultSeries: 4,
-                defaultReps: 12,
+                description: "Chest exercise",
+                defaultSeries: 5,
+                defaultReps: 8,
+                setsDone: 0,
                 userSeries: 0,
                 userReps: [], //this array length must be equal to userSeries
                 weights: [] //same as above
