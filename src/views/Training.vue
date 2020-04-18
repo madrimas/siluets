@@ -1,35 +1,29 @@
 <template>
   <div>
-     <md-steppers md-vertical>
-      <md-step id="first" md-label="First Step" md-description="Optional">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-      </md-step>
-
-      <md-step id="second" md-label="Second Step">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-      </md-step>
-
-      <md-step id="third" md-label="Third Step">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
+    <md-steppers md-vertical>
+      <md-step v-for="ex in exercises" :key="ex.id" :md-label="ex.displayName" :md-description="ex.description"> 
       </md-step>
     </md-steppers>
   </div>
-  
 </template>
 
 //steps should be generated for each excersise in training program
 
 
 <script>
+import { END_SINGLE_SERIES } from "@/store/actions.type";
+import { mapGetters } from "vuex";
 
 export default {
-  name: "training"
-
+  name: "training",
+  methods: {
+    endSingleSeries: function(exerciseInfo) {
+      //exercise info should have id, numOfSeries, weightOfSeries
+      this.$store.dispatch(END_SINGLE_SERIES, { exerciseInfo });
+    }
+  },
+  computed: {
+    ...mapGetters(["exercises"])
+  }
 };
 </script>

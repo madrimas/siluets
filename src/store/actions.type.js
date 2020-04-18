@@ -1,0 +1,1 @@
+export const END_SINGLE_SERIES = "endSingleSeries"
