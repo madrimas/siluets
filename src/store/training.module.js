@@ -84,16 +84,3 @@ export default {
     getters,
     mutations
 }
-
-// exerciseModel = {
-//     name: "",
-//     displayName: "",
-//     description: "",
-//     defaultSeries: 4,
-//     setsDone: 0,
-//     defaultReps: 12,
-//     userSeries: 5,
-//     userReps: [1, 2, 3, 4, 5], //this array length must be equal to userSeries
-//     weights: [1, 2, 3, 4, 5] //same as above
-// }
-
