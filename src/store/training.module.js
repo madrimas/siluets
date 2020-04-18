@@ -2,7 +2,8 @@ import {
     END_SINGLE_SET,
     CURRENT_EXERCISE,
     BACK_ONE_SET,
-    SHOW_TRAINING_SNACKBAR
+    SHOW_TRAINING_SNACKBAR,
+    TRAINING_PRESET_CHANGE
 } from "./actions.type"
 
 import {
@@ -12,7 +13,7 @@ import {
 import FirebaseService from "@/common/Firebase.service"
 
 const state = {
-    exercises: FirebaseService.getExercises(),
+    exercises: [],
     currentEx: null,
     currentSet: 1,
     showSnackbar: false,
@@ -61,6 +62,13 @@ const actions = {
     },
     [SHOW_TRAINING_SNACKBAR](context, show) {
         state.showSnackbar = show
+    },
+    [TRAINING_PRESET_CHANGE](context, presetNo) {
+        state.exercises = []
+        //commit fetch from db
+        setTimeout(()=> state.exercises = FirebaseService.getExercises(presetNo), 1000)
+        //in promise callback set state
+        
     }
 }
 

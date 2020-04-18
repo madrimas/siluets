@@ -1,6 +1,6 @@
 <template>
   <div>
-    <md-steppers md-vertical>
+    <md-steppers md-vertical v-if="exercises.length > 0">
       <md-step
         v-for="ex in exercises"
         :key="ex.id"
@@ -37,6 +37,35 @@
         <!-- <span class="md-body-1">Body 1</span> -->
       </md-step>
     </md-steppers>
+    <md-progress-spinner class="center-spinner" v-else :md-diameter="100" :md-stroke="10" md-mode="indeterminate"></md-progress-spinner>
+    <div class="bottom-bar">
+      <md-bottom-bar md-type="shift">
+        <md-bottom-bar-item
+          id="bottom-bar-item-training-1"
+          md-label="Training 1"
+          md-icon="looks_one"
+          @click="presetChange(1)"
+        ></md-bottom-bar-item>
+        <md-bottom-bar-item
+          id="bottom-bar-item-training-2"
+          md-label="Training 2"
+          md-icon="looks_two"
+          @click="presetChange(2)"
+        ></md-bottom-bar-item>
+        <md-bottom-bar-item
+          id="bottom-bar-item-training-3"
+          md-label="Training 3"
+          md-icon="looks_3"
+          @click="presetChange(3)"
+        ></md-bottom-bar-item>
+        <md-bottom-bar-item
+          id="bottom-bar-item-training-4"
+          md-label="Training 4"
+          md-icon="looks_4"
+          @click="presetChange(4)"
+        ></md-bottom-bar-item>
+      </md-bottom-bar>
+    </div>
   </div>
 </template>
 
@@ -48,7 +77,8 @@ import {
   END_SINGLE_SET,
   CURRENT_EXERCISE,
   BACK_ONE_SET,
-  SHOW_TRAINING_SNACKBAR
+  SHOW_TRAINING_SNACKBAR,
+  TRAINING_PRESET_CHANGE
 } from "@/store/actions.type";
 import { mapGetters } from "vuex";
 
@@ -56,7 +86,7 @@ export default {
   name: "training",
   methods: {
     endSingleSet: function(exercise) {
-      if(!this.verifyRequiredFields(exercise)) return;
+      if (!this.verifyRequiredFields(exercise)) return;
 
       this.$store.dispatch(END_SINGLE_SET, exercise.id);
     },
@@ -64,15 +94,12 @@ export default {
       this.$store.dispatch(CURRENT_EXERCISE, ex);
     },
     backOneSet: function(ex) {
-      console.log("LOL");
-
-      if(!this.verifyRequiredFields(ex)) return;
+      if (!this.verifyRequiredFields(ex)) return;
 
       this.$store.dispatch(BACK_ONE_SET, ex);
     },
-    closeSnackbar: function(){
-      this.$store.dispatch(SHOW_TRAINING_SNACKBAR, false);;
-
+    closeSnackbar: function() {
+      this.$store.dispatch(SHOW_TRAINING_SNACKBAR, false);
     },
     verifyRequiredFields: function(ex) {
       let reps = ex.userReps[this.currentSet - 1];
@@ -81,13 +108,14 @@ export default {
       if (reps === undefined || weights === undefined) {
         this.$store.dispatch(SHOW_TRAINING_SNACKBAR, true);
         setTimeout(() => {
-          this.$store.dispatch(SHOW_TRAINING_SNACKBAR, false);;
+          this.$store.dispatch(SHOW_TRAINING_SNACKBAR, false);
         }, this.duration);
         return false;
-        // console.log(reps, weights);
       }
       return true;
-      // if()
+    },
+    presetChange: function(presetNo) {
+      this.$store.dispatch(TRAINING_PRESET_CHANGE, presetNo);
     }
   },
   computed: {
@@ -100,8 +128,20 @@ export default {
     ])
   },
   mounted() {
-    // this.$store.dispatch(CURRENT_EXERCISE, exercises[0]);
-
+    this.$store.dispatch(TRAINING_PRESET_CHANGE, 1);
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.bottom-bar {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+}
+.center-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+</style>
