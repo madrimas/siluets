@@ -1,6 +1,21 @@
 <template>
   <div>
-    <md-steppers md-vertical v-if="exercises.length > 0">
+    <md-progress-spinner
+      class="center-spinner"
+      v-if="exercises == null"
+      :md-diameter="100"
+      :md-stroke="10"
+      md-mode="indeterminate"
+    ></md-progress-spinner>
+    <md-empty-state
+      v-else-if="exercises.length === 0"
+      class="md-accent"
+      md-rounded
+      md-icon="clear"
+      md-label="No workout assigned to preset"
+      md-description="Assign preset in presets tab and then use it."
+    ></md-empty-state>
+    <md-steppers md-vertical v-else-if="exercises.length > 0">
       <md-step
         v-for="ex in exercises"
         :key="ex.id"
@@ -37,7 +52,7 @@
         <!-- <span class="md-body-1">Body 1</span> -->
       </md-step>
     </md-steppers>
-    <md-progress-spinner class="center-spinner" v-else :md-diameter="100" :md-stroke="10" md-mode="indeterminate"></md-progress-spinner>
+
     <div class="bottom-bar">
       <md-bottom-bar md-type="shift">
         <md-bottom-bar-item
@@ -143,5 +158,9 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
+}
+.md-accent {
+ text-align: center;
+ top: 100px;
 }
 </style>

@@ -49,7 +49,7 @@ const FirebaseService = {
 
                 }
             ]
-        else 
+        else if (setNo === 2 || setNo === 3)
             return [
                 {
                     id: 'ld1',
@@ -93,6 +93,7 @@ const FirebaseService = {
 
                 }
             ]
+        else return []
     },
 
 }
