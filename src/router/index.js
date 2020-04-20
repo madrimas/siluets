@@ -17,7 +17,12 @@ export default new Router({
           {
             path: "presets/",
             name: "presets",
-            component: () => import("@/views/Presets")
+            component: () => import("@/views/Presets"),
+          },
+          { 
+            path: "creator/",
+            name: "presets-creator",
+            component: () => import("@/views/PresetsCreator")
           },
           {
             path: "measurements/",
