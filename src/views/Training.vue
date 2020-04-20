@@ -9,13 +9,14 @@
       md-description="Assign preset in presets tab and then use it."
     ></md-empty-state>
     <md-steppers md-vertical v-else-if="exercises.length > 0">
-      <md-step v-for="ex in exercises" :key="ex.id" :md-label="ex.displayName" :md-description="ex.description" v-on:click="changeExercise(ex)">
+      <md-step v-for="ex in exercises" :key="ex.id" :md-label="ex.displayName" :md-description="ex.description" 
+        v-on:click="changeExercise(ex)">
         <span class="md-subheading">Current set {{ currentSet }}</span>
 
         <md-field>
           <label>Reps</label>
           <md-input v-model="ex.userReps[currentSet - 1]" type="number" required></md-input>
-          <span class="md-helper-text">How many times you pushed</span>
+          <span class="md-helper-text">Number of </span>
         </md-field>
 
         <md-field>
@@ -36,14 +37,20 @@
       </md-step>
     </md-steppers>
 
+    <md-speed-dial class='md-bottom-right' @click="completeTraining">
+      <md-speed-dial-target>
+        <md-icon>done_all</md-icon>
+      </md-speed-dial-target>
+    </md-speed-dial>
     <div class="bottom-bar">
-      <md-bottom-bar md-type="shift">
+      <md-bottom-bar md-type="fixed">
         <md-bottom-bar-item id="bottom-bar-item-training-1" md-label="Training 1" md-icon="looks_one" @click="presetChange(1)"/>
         <md-bottom-bar-item id="bottom-bar-item-training-2" md-label="Training 2" md-icon="looks_two" @click="presetChange(2)"/>
         <md-bottom-bar-item id="bottom-bar-item-training-3" md-label="Training 3" md-icon="looks_3" @click="presetChange(3)" />
         <md-bottom-bar-item id="bottom-bar-item-training-4" md-label="Training 4" md-icon="looks_4" @click="presetChange(4)" />
       </md-bottom-bar>
     </div>
+
   </div>
 </template>
 
@@ -56,7 +63,8 @@ import {
   CURRENT_EXERCISE,
   BACK_ONE_SET,
   SHOW_TRAINING_SNACKBAR,
-  TRAINING_PRESET_CHANGE
+  TRAINING_PRESET_CHANGE,
+  FINISH_TRAINING
 } from "@/store/actions.type";
 import { mapGetters } from "vuex";
 
@@ -94,6 +102,9 @@ export default {
     },
     presetChange: function(presetNo) {
       this.$store.dispatch(TRAINING_PRESET_CHANGE, presetNo);
+    },
+    completeTraining: function() {
+      this.$store.dispatch(FINISH_TRAINING)
     }
   },
   computed: {
@@ -122,8 +133,11 @@ export default {
   top: 50%;
   left: 50%;
 }
-.md-accent {
- text-align: center;
- top: 100px;
+.md-bottom-right {
+  bottom: 75px
 }
+// .md-accent {
+//  text-align: center;
+//  top: 100px;
+// }
 </style>

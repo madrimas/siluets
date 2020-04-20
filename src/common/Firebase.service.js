@@ -5,7 +5,7 @@ import * as firebase from "firebase/app";
 
 const FirebaseService = {
     init() {
-        //   Unmock this shit;
+        firebase.initializeApp(firebaseConfig)
     },
     getExercises(setNo) {
         if (setNo === 1)
@@ -23,7 +23,6 @@ const FirebaseService = {
                     weights: [] //same as above
 
                 },
-
                 {
                     id: 'bp1',
                     name: "bench-press",
@@ -37,7 +36,6 @@ const FirebaseService = {
                     weights: [] //same as above
 
                 }
-
                 , {
                     id: 'bf1',
                     name: "butterfly",
@@ -98,6 +96,13 @@ const FirebaseService = {
             ]
         else return []
     },
+    saveTraining(excerciseData) {
+        excerciseData.userId = 1;
+        excerciseData.dateCompleted = new Date();
+        excerciseData.presetId = 1;
+
+        //dispatch
+    }
 
 }
 

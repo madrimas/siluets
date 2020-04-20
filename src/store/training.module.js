@@ -3,7 +3,8 @@ import {
     CURRENT_EXERCISE,
     BACK_ONE_SET,
     SHOW_TRAINING_SNACKBAR,
-    TRAINING_PRESET_CHANGE
+    TRAINING_PRESET_CHANGE,
+    FINISH_TRAINING
 } from "./actions.type"
 
 import {
@@ -40,13 +41,12 @@ const getters = {
 
 const actions = {
     [END_SINGLE_SET](context, seriesInfo) {
-        console.log(state)
-        let tempExe = state.exercises.find(ex => ex.id === seriesInfo.exId)
+        // console.log(state)
         state.currentSet += 1
     },
     [CURRENT_EXERCISE](context, exercise) {
         state.currentEx = exercise
-        console.log(exercise.userReps.length)
+        // console.log(exercise.userReps.length)
         let userSetsDone = exercise.userReps.length
         if(userSetsDone == 0) {
             state.currentSet = 1
@@ -69,6 +69,12 @@ const actions = {
         setTimeout(()=> state.exercises = FirebaseService.getExercises(presetNo), 1000)
         //in promise callback set state
         
+    },
+    [FINISH_TRAINING] (context) {
+        let trainingState = {
+            exercises: state.exercises
+        }
+        FirebaseService.saveTraining(trainingState)
     }
 }
 
