@@ -20,11 +20,14 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^24.9.0",
     "cross-env": "^7.0.2",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "execa": "latest"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "cross-env BABEL_ENV=dev vue-cli-service serve"
+    "serve": "cross-env BABEL_ENV=dev vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "siluets-deploy": "node scripts/gh-pages-deploy.js"
   },
   "repository": {
     "type": "git",
