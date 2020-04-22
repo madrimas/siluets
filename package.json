@@ -6,6 +6,7 @@
   "dependencies": {
     "@google-cloud/translate": "^5.3.0",
     "axios": "^0.19.2",
+    "file-loader": "^6.0.0",
     "firebase": "^7.14.1",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
