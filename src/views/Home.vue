@@ -24,3 +24,10 @@ export default {
   name: "home"
 };
 </script>
+
+<style scoped>
+.content{
+  width: 100%;
+  max-height: calc(100vh - 60px);
+}
+</style>
