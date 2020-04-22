@@ -53,6 +53,7 @@ export default {
   methods: {
     getImgUrl: function(imgName) {
       let urlName = imgName.replace(/\s/g, '')
+      console.log(require(`@/assets/images/${urlName}.png`))
       return require(`@/assets/images/${urlName}.png`).default
 
     }
@@ -62,3 +63,12 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  .md-card {
+    width: 320px;
+    margin: 4px;
+    display: inline-block;
+    vertical-align: top;
+  }
+</style>
