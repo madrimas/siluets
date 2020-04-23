@@ -13,3 +13,6 @@ export const FINISH_TRAINING = "finishTraining"
 //presetCreator module
 export const START_CATEGORIES_FETCH = "startCategoriesFetch"
 export const END_CATEGORIES_FETCH = "endCategoriesFetch" //probably will be unused
+
+//presets module
+export const START_PRESETS_FETCH = "startPresetsFetch"

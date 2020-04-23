@@ -1,37 +1,23 @@
 <template>
   <div>
-     <md-list md-expand-single='true'>
-      <md-subheader>Settings</md-subheader>
+    <md-list md-expand-single="true">
+      <md-subheader>Training presets</md-subheader>
 
-      <md-list-item md-expand>
+      <md-list-item v-for="preset in presets" :key="preset.presetId" md-expand>
         <md-icon>network_wifi</md-icon>
-        <span class="md-list-item-text">WiFi</span>
-        <md-switch  />    
+        <span class="md-list-item-text">{{ preset.presetName }}</span>
+        <md-switch />
 
-           <md-list slot="md-expand">
-            <md-list-item class="md-inset">World</md-list-item>
-            <md-list-item class="md-inset">Europe</md-list-item>
-            <md-list-item class="md-inset">South America</md-list-item>
-          </md-list>
-      </md-list-item>
-      <md-divider></md-divider>
-
-
-      <md-list-item expand> 
-        <md-icon>bluetooth</md-icon>
-        <span class="md-list-item-text">Bluetooth</span>
-        <md-switch  />
-      </md-list-item>
-      <md-divider></md-divider>
-
-
-      <md-list-item expand>
-        <md-icon>data_usage</md-icon>
-        <span class="md-list-item-text">Data Usage</span>
-        <!-- <md-switch v-model="settings.bluetooth" /> -->
+        <md-list slot="md-expand">
+          <md-list-item
+            v-for="exercise in preset.exercises"
+            :key="exercise.exerciseId"
+            class="md-inset"
+          >{{ exercise.exerciseName }}</md-list-item>
+        </md-list>
       </md-list-item>
     </md-list>
-    <md-speed-dial class='md-bottom-right'>
+    <md-speed-dial class="md-bottom-right">
       <md-speed-dial-target to="/creator/">
         <md-icon>add</md-icon>
       </md-speed-dial-target>
@@ -40,8 +26,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { START_PRESETS_FETCH } from "@/store/actions.type";
 
 export default {
-  name: "presets"
+  name: "presets",
+  methods: {},
+  computed: {
+    ...mapGetters(["focusedPreset", "focusedPresetId", "presets"])
+  },
+  mounted() {
+    this.$store.dispatch(START_PRESETS_FETCH);
+  }
 };
 </script>

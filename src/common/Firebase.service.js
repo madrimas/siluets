@@ -102,6 +102,56 @@ const FirebaseService = {
         excerciseData.presetId = 1;
 
         //dispatch
+    },
+    getPresets() {
+        let presets = [{
+            presetId: 1,
+            presetName: "Klata",
+            exercises: [
+                {
+                    execiseId: 1,
+                    externalMuscleCategory: 1,
+                    externalExerciseId: 1,
+                    exerciseName: "Laweczka plaska",
+                },
+                {
+                    execiseId: 2,
+                    externalMuscleCategory: 1,
+                    externalExerciseId: 2,
+                    exerciseName: "Rozpietki",
+                }, {
+                    execiseId: 3,
+                    externalMuscleCategory: 1,
+                    externalExerciseId: 3,
+                    exerciseName: "Laweczka skosna",
+                }
+            ]
+        }, {
+            presetId: 2,
+            presetName: "Bicpes",
+            exercises: [
+                {
+                    execiseId: 4,
+                    externalMuscleCategory: 2,
+                    externalExerciseId: 11,
+                    exerciseName: "Sztanga",
+                },
+                {
+                    execiseId: 5,
+                    externalMuscleCategory: 2,
+                    externalExerciseId: 12,
+                    exerciseName: "Sublimacja",
+                }, {
+                    execiseId: 6,
+                    externalMuscleCategory: 2,
+                    externalExerciseId: 13,
+                    exerciseName: "Wyciaganie linki wyciagu dolnego",
+                }
+            ]
+        }]
+
+        let promis = new Promise(function (resolve) { resolve(presets) });
+        return promis;
     }
 
 }
