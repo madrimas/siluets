@@ -16,3 +16,6 @@ export const END_CATEGORIES_FETCH = "endCategoriesFetch" //probably will be unus
 
 //presets module
 export const START_PRESETS_FETCH = "startPresetsFetch"
+export const CONFIRM_PRESET_CREATION = "confirmPresetCreation"
+export const CANCEL_PRESET_CREATION = "cancelPresetCreation"
+

@@ -1,11 +1,13 @@
 import ExercisesService from "@/common/Exercises.service"
 
 import {
-    START_CATEGORIES_FETCH
+    START_CATEGORIES_FETCH,
+    START_EXERCISES_FETCH
 } from "./actions.type"
 
 import {
-    SET_MUSCLE_CATEGORIES
+    SET_MUSCLE_CATEGORIES,
+    SET_FETCHED_EXERCISES
 } from "./mutations.type"
 
 const state = {
@@ -25,6 +27,12 @@ const actions = {
         .then(({ data }) => {
             context.commit(SET_MUSCLE_CATEGORIES, data.results)
         })
+    },
+    [START_EXERCISES_FETCH](context, category) {
+        ExercisesService.getWorkoutsForCategory(category)
+            .then(({ data }) => {
+                context.commit(SET_FETCHED_EXERCISES, data.results)
+            })
     }
 }
 
