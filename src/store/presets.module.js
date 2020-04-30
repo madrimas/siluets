@@ -3,7 +3,8 @@ import FirebaseService from "@/common/Firebase.service"
 import {
     START_PRESETS_FETCH,
     CONFIRM_PRESET_CREATION,
-    CANCEL_PRESET_CREATION
+    CANCEL_PRESET_CREATION,
+    ADD_TO_TRAINING
 } from "./actions.type"
 
 import {
@@ -52,7 +53,8 @@ const getters = {
 
 const actions = {
     [START_PRESETS_FETCH](context) {
-        state.presets = null
+        console.log("Action triggered: ", START_PRESETS_FETCH)
+        // if(state.presetes) state.presets = null
         FirebaseService
             .getPresets()
             .then(presets => {
@@ -75,7 +77,28 @@ const actions = {
     [CANCEL_PRESET_CREATION](context) {
         context.commit(SET_CREATED_PRESET_NAME, '')
     },
+    [ADD_TO_TRAINING](context, exerciseComposed) {
+        // let exerciseComposed = {
+        //     exercise: exercise,
+        //     presetId: presetId
+        // }
 
+
+        // exerciseId: 1,
+        // externalMuscleCategory: 1,
+        // externalExerciseId: 1,
+        // exerciseName: "Laweczka plaska",
+        let preparedExercise = {
+            exerciseId: exerciseComposed.exercise.id,
+            // externalMuscleCategory: 1,???
+            externalExerciseId: 1,
+            exerciseName: exerciseComposed.exercise.name
+        }
+        let editedPreset = state.presets.find(p => p.presetId = exerciseComposed.presetId)
+        editedPreset.exercises.push(preparedExercise) //there is conflict with START_PRESETS_FETCH (shouldn't be triggered after addExercise)
+
+        console.log(exerciseComposed)
+    }
 }
 
 const mutations = {

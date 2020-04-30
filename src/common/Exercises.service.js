@@ -20,6 +20,7 @@ const ExercisesServices = {
         })
     },
     getWorkoutsForCategory(category) {
+        console.log("Category choosen: " + category)
         let params = {
             muscles: category,
             license_author: DEFAULT_LICENSE_AUTHOR

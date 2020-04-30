@@ -20,8 +20,8 @@ export default new Router({
             component: () => import("@/views/Presets"),
           },
           { 
-            path: "creator/",
-            name: "presets-creator",
+            path: "creator/:presetId",
+            name: "creator",
             component: () => import("@/views/PresetsCreator")
           },
           {

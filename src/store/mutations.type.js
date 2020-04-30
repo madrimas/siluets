@@ -3,6 +3,8 @@ export const SET_CURRENT_SET = "setCurrentSet";
 //presets creator
 export const SET_MUSCLE_CATEGORIES = "setMuscleCategories"
 export const SET_FETCHED_EXERCISES = "setFetchedExercises"
+export const SET_CHOOSEN_MUSCLE = "setChoosenMuscle"
+export const SET_CATEGORY_SELECTION = "setCategorySelection"
 
 //presets
 export const SET_FOCUSED_PRESET = "setFocusedPreset"

@@ -45,8 +45,8 @@
         </md-list>
       </md-list-item>
     </md-list>
-    <md-speed-dial class="md-bottom-right">
-      <md-speed-dial-target to="/creator/">
+    <md-speed-dial v-if="!!presets" class="md-bottom-right">
+      <md-speed-dial-target @click="getToRoute()">
         <md-icon>add</md-icon>
       </md-speed-dial-target>
     </md-speed-dial>
@@ -80,6 +80,18 @@ export default {
     },
     toggleEditionMode: function() {
       this.$store.commit(SET_EDITION_MODE)
+    },
+    getToRoute: function() {
+      let expandedId = 0
+
+      this.$store.getters.expanded.forEach((val, i) => {
+        if(val === true) {
+          expandedId = i;
+        }
+      })
+
+      this.$router.push({name: 'creator', params: { presetId: expandedId }})
+
     }
   },
   computed: {
