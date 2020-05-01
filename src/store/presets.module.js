@@ -4,7 +4,8 @@ import {
     START_PRESETS_FETCH,
     CONFIRM_PRESET_CREATION,
     CANCEL_PRESET_CREATION,
-    ADD_TO_TRAINING
+    ADD_TO_TRAINING,
+    REMOVE_EXERCISE_FROM_PRESET
 } from "./actions.type"
 
 import {
@@ -64,7 +65,7 @@ const actions = {
         
     },
     [CONFIRM_PRESET_CREATION](context) {
-        //here we should asynchronicaly get id from db for preset and then update it in whole state
+        //here we should asynchronously get id from db for preset and then update it in whole state
         //so this preset should be added to state as it is, paralely we save it in db
         //any changes will be commited to db after interaction with user
         state.presets.push({
@@ -86,10 +87,26 @@ const actions = {
             exerciseName: exerciseComposed.exercise.name
         }
         let editedPreset = state.presets
-                            .find(p => p.presetId = exerciseComposed.presetId)
-                            
+                            .find(p => p.presetId === exerciseComposed.presetId)
+
         editedPreset.exercises.push(preparedExercise)
         console.log(exerciseComposed)
+    },
+    [REMOVE_EXERCISE_FROM_PRESET](context, exerciseAndPreset) {
+        let editedPreset = state.presets
+                    .find(p => p.presetId === exerciseAndPreset.preset.presetId)
+
+        console.log("Edited preset: ", editedPreset)
+        let indexToRemove = null;
+        editedPreset.exercises.forEach((exercise, i) =>  {
+            if(exercise.exerciseId === exerciseAndPreset.exercise.exerciseId) {
+                indexToRemove = i;
+            }
+        }) 
+
+        if(indexToRemove !== null) {
+            editedPreset.exercises.splice(indexToRemove, 1)
+        }
     }
 }
 
@@ -117,7 +134,6 @@ const mutations = {
         state.editionMode = !state.editionMode
     }
 }
-
 
 preset: {
     enabled: true

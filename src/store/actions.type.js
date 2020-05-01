@@ -21,6 +21,7 @@ export const AFTER_CHOOSE_ACTION = "afterChooseAction"
 export const START_PRESETS_FETCH = "startPresetsFetch"
 export const CONFIRM_PRESET_CREATION = "confirmPresetCreation"
 export const CANCEL_PRESET_CREATION = "cancelPresetCreation"
+export const REMOVE_EXERCISE_FROM_PRESET = "removeExerciseFromPreset"
 
 //shared
 export const ADD_TO_TRAINING = "addToTraining"

@@ -24,8 +24,6 @@
     />
 
     <md-list md-expand-single="true">
-      <!-- <md-subheader>Training presets</md-subheader> -->
-
       <md-list-item
         v-for="preset in presets"
         :key="preset.presetId"
@@ -34,18 +32,23 @@
       >
         <md-icon>fitness_center</md-icon>
         <span class="md-list-item-text">{{ preset.presetName }}</span>
-        <md-switch v-model="preset.isPresetAssigned" />
+        <md-switch v-if="editionMode" v-model="preset.isPresetAssigned" />
 
         <md-list slot="md-expand">
           <md-list-item
             v-for="exercise in preset.exercises"
-            :key="exercise.exerciseId"
+            :key="`${preset.presetId}-${exercise.exerciseId}`"
             class="md-inset"
-          >{{ exercise.exerciseName }}</md-list-item>
+          >
+            <span class="md-list-item-text">{{ exercise.exerciseName }}</span>
+            <md-button v-if="editionMode" @click="deleteExercise(preset, exercise)" class="md-icon-button md-list-action">
+              <md-icon class="md-primary">delete_outline</md-icon>
+            </md-button>
+          </md-list-item>
         </md-list>
       </md-list-item>
     </md-list>
-    <md-speed-dial v-if="!!presets" class="md-bottom-right">
+    <md-speed-dial v-if="editionMode" class="md-bottom-right">
       <md-speed-dial-target @click="getToRoute()">
         <md-icon>add</md-icon>
       </md-speed-dial-target>
@@ -58,7 +61,8 @@ import { mapGetters } from "vuex";
 import {
   START_PRESETS_FETCH,
   CONFIRM_PRESET_CREATION,
-  CANCEL_PRESET_CREATION
+  CANCEL_PRESET_CREATION,
+  REMOVE_EXERCISE_FROM_PRESET
 } from "@/store/actions.type";
 import {
   SET_CREATE_DIALOG,
@@ -79,23 +83,37 @@ export default {
       this.$store.dispatch(CANCEL_PRESET_CREATION);
     },
     toggleEditionMode: function() {
-      this.$store.commit(SET_EDITION_MODE)
+      this.$store.commit(SET_EDITION_MODE);
     },
     getToRoute: function() {
-      let expandedId = 0
+      let expandedId = 0;
 
       this.$store.getters.expanded.forEach((val, i) => {
-        if(val === true) {
+        if (val === true) {
           expandedId = i;
         }
-      })
+      });
 
-      this.$router.push({name: 'creator', params: { presetId: expandedId }})
+      this.$router.push({ name: "creator", params: { presetId: expandedId } });
+    },
+    deleteExercise: function(preset, exercise) {
+      let exerciseAndPreset = {
+        preset: preset,
+        exercise: exercise
+      }
 
+      console.log("Delete exercise: ", exerciseAndPreset)
+      this.$store.dispatch(REMOVE_EXERCISE_FROM_PRESET, exerciseAndPreset)
     }
   },
   computed: {
-    ...mapGetters(["focusedPreset", "focusedPresetId", "presets", "expanded", "editionMode"]),
+    ...mapGetters([
+      "focusedPreset",
+      "focusedPresetId",
+      "presets",
+      "expanded",
+      "editionMode"
+    ]),
     createDialog: {
       get: function() {
         return this.$store.getters.createDialog;
