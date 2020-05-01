@@ -53,13 +53,15 @@ const getters = {
 
 const actions = {
     [START_PRESETS_FETCH](context) {
-        console.log("Action triggered: ", START_PRESETS_FETCH)
-        // if(state.presetes) state.presets = null
-        FirebaseService
+        console.log("Action triggered: ",START_PRESETS_FETCH)
+        if(state.presets === null) {
+            FirebaseService
             .getPresets()
             .then(presets => {
                 context.commit(SET_PRESETS, presets)
             })
+        }
+        
     },
     [CONFIRM_PRESET_CREATION](context) {
         //here we should asynchronicaly get id from db for preset and then update it in whole state
@@ -78,25 +80,15 @@ const actions = {
         context.commit(SET_CREATED_PRESET_NAME, '')
     },
     [ADD_TO_TRAINING](context, exerciseComposed) {
-        // let exerciseComposed = {
-        //     exercise: exercise,
-        //     presetId: presetId
-        // }
-
-
-        // exerciseId: 1,
-        // externalMuscleCategory: 1,
-        // externalExerciseId: 1,
-        // exerciseName: "Laweczka plaska",
         let preparedExercise = {
             exerciseId: exerciseComposed.exercise.id,
-            // externalMuscleCategory: 1,???
-            externalExerciseId: 1,
+            externalExerciseId: exerciseComposed.exercise.id,
             exerciseName: exerciseComposed.exercise.name
         }
-        let editedPreset = state.presets.find(p => p.presetId = exerciseComposed.presetId)
-        editedPreset.exercises.push(preparedExercise) //there is conflict with START_PRESETS_FETCH (shouldn't be triggered after addExercise)
-
+        let editedPreset = state.presets
+                            .find(p => p.presetId = exerciseComposed.presetId)
+                            
+        editedPreset.exercises.push(preparedExercise)
         console.log(exerciseComposed)
     }
 }
