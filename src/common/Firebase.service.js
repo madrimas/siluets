@@ -95,6 +95,9 @@ const FirebaseService = {
 
         let promise = new Promise(function (resolve) { resolve(presetsArray) });
         return promise;
+    },
+    removePreset(preset){
+        //todo
     }
 
 }

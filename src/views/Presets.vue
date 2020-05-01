@@ -33,7 +33,9 @@
         <md-icon>fitness_center</md-icon>
         <span class="md-list-item-text">{{ preset.presetName }}</span>
         <md-switch v-if="editionMode" v-model="preset.isPresetAssigned" />
-
+            <md-button v-if="editionMode" @click="deletePreset(preset)" class="md-icon-button md-list-action">
+              <md-icon class="md-primary">delete_outline</md-icon>
+            </md-button>
         <md-list slot="md-expand">
           <md-list-item
             v-for="exercise in preset.exercises"
@@ -62,7 +64,8 @@ import {
   START_PRESETS_FETCH,
   CONFIRM_PRESET_CREATION,
   CANCEL_PRESET_CREATION,
-  REMOVE_EXERCISE_FROM_PRESET
+  REMOVE_EXERCISE_FROM_PRESET,
+  REMOVE_PRESET
 } from "@/store/actions.type";
 import {
   SET_CREATE_DIALOG,
@@ -101,9 +104,10 @@ export default {
         preset: preset,
         exercise: exercise
       }
-
-      console.log("Delete exercise: ", exerciseAndPreset)
       this.$store.dispatch(REMOVE_EXERCISE_FROM_PRESET, exerciseAndPreset)
+    },
+    deletePreset: function(preset) {
+      this.$store.dispatch(REMOVE_PRESET, preset)
     }
   },
   computed: {

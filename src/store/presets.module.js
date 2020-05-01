@@ -5,7 +5,8 @@ import {
     CONFIRM_PRESET_CREATION,
     CANCEL_PRESET_CREATION,
     ADD_TO_TRAINING,
-    REMOVE_EXERCISE_FROM_PRESET
+    REMOVE_EXERCISE_FROM_PRESET,
+    REMOVE_PRESET
 } from "./actions.type"
 
 import {
@@ -107,6 +108,20 @@ const actions = {
         if(indexToRemove !== null) {
             editedPreset.exercises.splice(indexToRemove, 1)
         }
+    }, 
+    [REMOVE_PRESET](context, preset) {
+        //first remove it from vuex store
+        let presetIdToRemove = null;
+        state.presets.forEach((p, i) => {
+            if(p.presetId === preset.presetId) {
+                presetIdToRemove = i;
+            }
+        })
+        if(presetIdToRemove !== null) {
+            state.presets.splice(presetIdToRemove, 1);
+        }
+        //secondly 
+        FirebaseService.removePreset(preset);
     }
 }
 
