@@ -37,8 +37,8 @@
       </md-step>
     </md-steppers>
 
-    <md-speed-dial class='md-bottom-right' @click="completeTraining">
-      <md-speed-dial-target>
+    <md-speed-dial class='md-bottom-right'>
+      <md-speed-dial-target @click="completeTraining">
         <md-icon>done_all</md-icon>
       </md-speed-dial-target>
     </md-speed-dial>
