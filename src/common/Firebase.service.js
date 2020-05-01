@@ -52,9 +52,9 @@ const FirebaseService = {
     saveTraining(excerciseData) {
         var db = firebase.firestore();
 
-        excerciseData.userId = 1;
         excerciseData.dateCompleted = new Date();
-        excerciseData.presetId = 1;
+        excerciseData.userId = 1;
+        excerciseData.parentPresetId = 1;
 
         console.log(excerciseData);
 
@@ -117,7 +117,71 @@ const FirebaseService = {
             })
     },
     removePreset(preset) {
-        //todo
+        var db = firebase.firestore();
+
+        db.collection("presets").doc(preset.presetId).delete().then(function() {
+            console.log("Document successfully deleted!");
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+    },
+    addPreset(preset) {
+        var db = firebase.firestore();
+
+        var newPresetRef = db.collection("presets").doc();
+
+        preset.creationDate = new Date();
+        preset.userId = "1"; //TODO user from Auth context
+        preset.presetId = newPresetRef.id;
+
+        console.log(preset);
+
+        newPresetRef.set({
+            presetId: preset.presetId,
+            userId: preset.userId,
+            creationDate: preset.creationDate,
+            presetName: preset.presetName,
+            isFavouritePreset: preset.isFavouritePreset,
+            favouritePresetNo: preset.favouritePresetNo,
+            exercises : preset.exercises
+        })
+        .then(function() {
+            console.log("Document written with ID: ", newPresetRef.id);
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+
+        //dispatch
+    },
+    setFavouritePresetValue(preset) {
+        var db = firebase.firestore();
+
+        if (preset.isFavouritePreset) {
+            db.collection('presets').where('isFavouritePreset', '==', true).where('userId', '==', preset.userId)
+                .get().then(snap => {
+                    preset.favouritePresetNo = (snap.size + 1)
+                    this.updateFavouritePresetValue(db, preset);
+                });
+        } else {
+            preset.favouritePresetNo = 0;
+            this.updateFavouritePresetValue(db, preset);
+        }
+    },
+    updateFavouritePresetValue(db, preset) {
+        let presetToUpdateRef = db.collection("presets").doc(preset.presetId);
+
+        presetToUpdateRef.update({
+            isFavouritePreset: preset.isFavouritePreset,
+            favouritePresetNo: preset.favouritePresetNo
+        })
+            .then(function () {
+                console.log("Document successfully updated!");
+            })
+            .catch(function (error) {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
     }
 
 }

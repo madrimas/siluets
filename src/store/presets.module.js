@@ -69,14 +69,18 @@ const actions = {
         //here we should asynchronously get id from db for preset and then update it in whole state
         //so this preset should be added to state as it is, paralely we save it in db
         //any changes will be commited to db after interaction with user
-        state.presets.push({
+        let preset = {
             presetId: null,
             presetName: state.createdPresetName,
-            presetAssigned: 0,
-            isPresetAssigned: false,
+            favouritePresetNo: 0,
+            isFavouritePreset: false,
             exercises: []
-        })
+        }
+        
+        state.presets.push(preset)
         context.commit(SET_CREATED_PRESET_NAME, '')
+
+        FirebaseService.addPreset(preset);
     },
     [CANCEL_PRESET_CREATION](context) {
         context.commit(SET_CREATED_PRESET_NAME, '')
