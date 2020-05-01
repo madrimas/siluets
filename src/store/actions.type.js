@@ -13,6 +13,16 @@ export const FINISH_TRAINING = "finishTraining"
 //presetCreator module
 export const START_CATEGORIES_FETCH = "startCategoriesFetch"
 export const END_CATEGORIES_FETCH = "endCategoriesFetch" //probably will be unused
+export const START_EXERCISES_FETCH = "startExercisesFetch"
+export const HANDLE_MUSCLE_CHOICE = "handleMuscleChoice"
+export const AFTER_CHOOSE_ACTION = "afterChooseAction"
 
 //presets module
 export const START_PRESETS_FETCH = "startPresetsFetch"
+export const CONFIRM_PRESET_CREATION = "confirmPresetCreation"
+export const CANCEL_PRESET_CREATION = "cancelPresetCreation"
+export const REMOVE_EXERCISE_FROM_PRESET = "removeExerciseFromPreset"
+
+//shared
+export const ADD_TO_TRAINING = "addToTraining"
+

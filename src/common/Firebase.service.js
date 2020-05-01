@@ -107,20 +107,22 @@ const FirebaseService = {
         let presets = [{
             presetId: 1,
             presetName: "Klata",
+            presetAssigned: 1,
+            isPresetAssigned: true,
             exercises: [
                 {
-                    execiseId: 1,
+                    exerciseId: 1,
                     externalMuscleCategory: 1,
                     externalExerciseId: 1,
                     exerciseName: "Laweczka plaska",
                 },
                 {
-                    execiseId: 2,
+                    exerciseId: 2,
                     externalMuscleCategory: 1,
                     externalExerciseId: 2,
                     exerciseName: "Rozpietki",
                 }, {
-                    execiseId: 3,
+                    exerciseId: 3,
                     externalMuscleCategory: 1,
                     externalExerciseId: 3,
                     exerciseName: "Laweczka skosna",
@@ -129,20 +131,22 @@ const FirebaseService = {
         }, {
             presetId: 2,
             presetName: "Bicpes",
+            presetAssigned: 2,
+            isPresetAssigned: true,
             exercises: [
                 {
-                    execiseId: 4,
+                    exerciseId: 4,
                     externalMuscleCategory: 2,
                     externalExerciseId: 11,
                     exerciseName: "Sztanga",
                 },
                 {
-                    execiseId: 5,
+                    exerciseId: 5,
                     externalMuscleCategory: 2,
                     externalExerciseId: 12,
                     exerciseName: "Sublimacja",
                 }, {
-                    execiseId: 6,
+                    exerciseId: 6,
                     externalMuscleCategory: 2,
                     externalExerciseId: 13,
                     exerciseName: "Wyciaganie linki wyciagu dolnego",
