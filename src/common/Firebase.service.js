@@ -90,24 +90,17 @@ const FirebaseService = {
         return promise;
     },
     removeExerciseFromPreset(exerciseAndPreset) {
-        console.log('dupa1')
-
         console.log(exerciseAndPreset);
 
         var db = firebase.firestore();
 
-        let exercises = exerciseAndPreset.preset.exercises;
+        let preset = exerciseAndPreset.preset;
+        let exercise = exerciseAndPreset.exercise;
 
-        db.collection("presets").where("presetId", "==", exerciseAndPreset.preset.presetId)
-            .get()
-            .then(function (querySnapshot) {
-                querySnapshot.forEach(function (doc) {
-                    console.log('dupa2')
-                    console.log(doc.id, " => ", doc.data());
-                    // Build doc ref from doc.id
-                    db.collection("presets").doc(doc.id).set({ exercises }, { merge: true });
-                });
-            })
+        // Atomically remove a region from the "exercises" array field.
+        db.collection("presets").doc(preset.presetId).update({
+            exercises: firebase.firestore.FieldValue.arrayRemove(exercise)
+        });
     },
     removePreset(preset) {
         var db = firebase.firestore();
@@ -175,6 +168,48 @@ const FirebaseService = {
                 // The document probably doesn't exist.
                 console.error("Error updating document: ", error);
             });
+    },
+    addExerciseToPreset(exerciseAndPreset) {
+        let preset = exerciseAndPreset.preset;
+        let exercise = exerciseAndPreset.exercise;
+
+        // exercise.exerciseId = 6
+        // exercise.exerciseName = "dupa12345678"
+        // exercise.defaultReps = 12
+        // exercise.defaultSeries = 4
+        // exercise.description = "Lifthing weight from the floor"
+        // exercise.displayName = "Deadlift"
+        // exercise.name = "deadlift"
+        // exercise.setsDone = 0
+        // exercise.userSeries = 0
+        // exercise.muscleId = 1
+
+        let exerciseToAdd = {
+            exerciseId: exercise.exerciseId,
+            exerciseName: exercise.exerciseName,
+            defaultReps: exercise.defaultReps,
+            defaultSeries: exercise.defaultSeries,
+            description: exercise.description,
+            displayName: exercise.displayName,
+            name: exercise.name,
+            muscleId: exercise.muscleId,
+            setsDone: exercise.setsDone,
+            userReps: [],
+            userSeries: exercise.userSeries,
+            weights: []
+        }
+
+        console.log(exerciseToAdd);
+
+        var db = firebase.firestore();
+
+        var presetToUpdate = db.collection("presets").doc(preset.presetId);
+        // var presetToUpdate = db.collection("presets").doc("XjE5xgESsu5mzuTNwtmb");
+
+        // Atomically add a new region to the "exercises" array field.
+        presetToUpdate.update({
+            exercises: firebase.firestore.FieldValue.arrayUnion(exerciseToAdd)
+        });
     }
 
 }
