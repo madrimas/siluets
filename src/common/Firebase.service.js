@@ -95,6 +95,23 @@ const FirebaseService = {
 
         let promise = new Promise(function (resolve) { resolve(presetsArray) });
         return promise;
+    },
+    isUserLoggedIn() {
+        //todo: unmock
+
+        return true;
+    },
+    login(loginData) {
+        // loginData: {
+        //     email: "email",
+        //     password: "password"
+        // }
+    },
+    register(registerData) {
+        // registerData: {
+        //     email: "email",
+        //     password: "password"
+        // }
     }
 
 }

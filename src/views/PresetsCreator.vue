@@ -95,7 +95,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-//todo: more responsivenes/scalabilty
 .card {
   position: relative;
   width: 320px;
@@ -104,14 +103,10 @@ export default {
 }
 .wide-card {
   position: relative;
-  // width: 95%;
   margin: 4px;
   object-fit: cover;
 }
 .muscle-content {
-  // display: grid;
-  // grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  // grid-gap: 15px;
   margin: 10px;
   max-width: 100%;
   max-height: calc(98vh - 60px);
@@ -125,8 +120,4 @@ export default {
   max-height: calc(98vh - 60px);
   overflow: auto;
 }
-
-// .md-content {
-
-// }
 </style>
