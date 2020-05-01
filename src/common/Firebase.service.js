@@ -16,38 +16,31 @@ const FirebaseService = {
     getExercises(setNo) {
         var db = firebase.firestore();
 
-        let exercisesSet = [];
+        let presetsExercises = {
+            parentPresetId: "",
+            exercises: []
+        };
 
-        if (setNo === 1) {
-            db.collection("exercises").where('name', 'in', ['deadlift', 'bench-press', 'butterfly'])
-                .get()
-                .then(function (querySnapshot) {
-                    querySnapshot.forEach(function (doc) {
-                        // doc.data() is never undefined for query doc snapshots
-                        console.log(doc.id, " => ", doc.data());
-                        exercisesSet.push(doc.data());
-                    });
-                })
-                .catch(function (error) {
-                    console.log("Error getting documents: ", error);
-                });
-        }
-        else if (setNo === 2 || setNo === 3) {
-            db.collection("exercises").where('name', 'in', ['liftdead', 'press-bench', 'flybutter'])
-                .get()
-                .then(function (querySnapshot) {
-                    querySnapshot.forEach(function (doc) {
-                        // doc.data() is never undefined for query doc snapshots
-                        console.log(doc.id, " => ", doc.data());
-                        exercisesSet.push(doc.data());
-                    });
-                })
-                .catch(function (error) {
-                    console.log("Error getting documents: ", error);
-                });
-        }
+        let userId = "1"; //TODO userId from Auth
 
-        return exercisesSet;
+        db.collection('presets').where('userId', '==', userId).where('favouritePresetNo', '==', setNo)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    // doc.data() is never undefined for query doc snapshots
+                    let preset = doc.data();
+                    console.log(doc.id, " => ", preset);
+                    presetsExercises.parentPresetId = preset.presetId;
+                    presetsExercises.exercises = preset.exercises;
+                });
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
+
+        let promisePresetsExercises = new Promise(function (resolve) { resolve(presetsExercises) });
+        console.log(promisePresetsExercises);
+        return promisePresetsExercises;
     },
     saveTraining(excerciseData) {
         var db = firebase.firestore();
