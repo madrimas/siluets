@@ -100,18 +100,43 @@ const FirebaseService = {
         //todo: unmock
 
         return true;
+
+        var user = firebase.auth().currentUser;
+
+        if (user) {
+            return true;
+        } else {
+            return false;
+        }
     },
     login(loginData) {
         // loginData: {
         //     email: "email",
         //     password: "password"
         // }
+        firebase.auth()
+        .signInWithEmailAndPassword(loginData.email, loginData.password)
+        .catch(function(error) {
+            console.log("Login error" + error);
+          });
     },
     register(registerData) {
         // registerData: {
         //     email: "email",
         //     password: "password"
         // }
+        firebase.auth()
+        .createUserWithEmailAndPassword(registerData.email, registerData.password)
+        .catch(function(error) {
+            console.log("Registration error" + error);
+          });
+    },
+    logout(){
+        firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+          }).catch(function(error) {
+            console.log("Logout error" + error);
+          });
     }
 
 }
