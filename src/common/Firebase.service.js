@@ -50,9 +50,28 @@ const FirebaseService = {
         return exercisesSet;
     },
     saveTraining(excerciseData) {
+        var db = firebase.firestore();
+
         excerciseData.userId = 1;
         excerciseData.dateCompleted = new Date();
         excerciseData.presetId = 1;
+
+        console.log(excerciseData);
+
+        db.collection("trainings").add({
+            dateCompleted: excerciseData.dateCompleted,
+            presetId: excerciseData.presetId,
+            userId: excerciseData.userId,
+            exercises: excerciseData.exercises
+        })
+        .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+
+
 
         //dispatch
     },
