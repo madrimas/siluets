@@ -104,6 +104,8 @@ export default {
         preset: preset,
         exercise: exercise
       }
+    
+      console.log("Delete exercise: ", exerciseAndPreset)
       this.$store.dispatch(REMOVE_EXERCISE_FROM_PRESET, exerciseAndPreset)
     },
     deletePreset: function(preset) {

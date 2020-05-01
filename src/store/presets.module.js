@@ -108,6 +108,8 @@ const actions = {
         if(indexToRemove !== null) {
             editedPreset.exercises.splice(indexToRemove, 1)
         }
+
+        FirebaseService.removeExerciseFromPreset(exerciseAndPreset)
     }, 
     [REMOVE_PRESET](context, preset) {
         //first remove it from vuex store

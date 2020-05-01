@@ -96,7 +96,27 @@ const FirebaseService = {
         let promise = new Promise(function (resolve) { resolve(presetsArray) });
         return promise;
     },
-    removePreset(preset){
+    removeExerciseFromPreset(exerciseAndPreset) {
+        console.log('dupa1')
+
+        console.log(exerciseAndPreset);
+
+        var db = firebase.firestore();
+
+        let exercises = exerciseAndPreset.preset.exercises;
+
+        db.collection("presets").where("presetId", "==", exerciseAndPreset.preset.presetId)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    console.log('dupa2')
+                    console.log(doc.id, " => ", doc.data());
+                    // Build doc ref from doc.id
+                    db.collection("presets").doc(doc.id).set({ exercises }, { merge: true });
+                });
+            })
+    },
+    removePreset(preset) {
         //todo
     }
 
