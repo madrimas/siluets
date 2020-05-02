@@ -21,7 +21,7 @@ const FirebaseService = {
             exercises: []
         };
 
-        let userId = "1"; //TODO userId from Auth
+        let userId = firebase.auth().currentUser.uid;
 
         db.collection('presets').where('userId', '==', userId).where('favouritePresetNo', '==', setNo)
             .get()
@@ -46,7 +46,7 @@ const FirebaseService = {
         var db = firebase.firestore();
 
         excerciseData.dateCompleted = new Date();
-        excerciseData.userId = 1;
+        excerciseData.userId = firebase.auth().currentUser.uid;
         excerciseData.parentPresetId = 1;
 
         console.log(excerciseData);
@@ -117,7 +117,7 @@ const FirebaseService = {
         var newPresetRef = db.collection("presets").doc();
 
         preset.creationDate = new Date();
-        preset.userId = "1"; //TODO user from Auth context
+        preset.userId = firebase.auth().currentUser.uid;
         preset.presetId = newPresetRef.id;
 
         console.log(preset);
