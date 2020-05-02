@@ -171,32 +171,23 @@ const FirebaseService = {
             });
     },
     addExerciseToPreset(exerciseAndPreset) {
-        let preset = exerciseAndPreset.preset;
+        let presetId = exerciseAndPreset.presetId;
         let exercise = exerciseAndPreset.exercise;
 
-        // exercise.exerciseId = 6
-        // exercise.exerciseName = "dupa12345678"
-        // exercise.defaultReps = 12
-        // exercise.defaultSeries = 4
-        // exercise.description = "Lifthing weight from the floor"
-        // exercise.displayName = "Deadlift"
-        // exercise.name = "deadlift"
-        // exercise.setsDone = 0
-        // exercise.userSeries = 0
-        // exercise.muscleId = 1
+        console.log(presetId + ' exercise', exercise)
 
         let exerciseToAdd = {
-            exerciseId: exercise.exerciseId,
-            exerciseName: exercise.exerciseName,
-            defaultReps: exercise.defaultReps,
-            defaultSeries: exercise.defaultSeries,
+            exerciseId: exercise.id,
+            exerciseName: exercise.name,
             description: exercise.description,
-            displayName: exercise.displayName,
-            name: exercise.name,
-            muscleId: exercise.muscleId,
-            setsDone: exercise.setsDone,
+
+            muscleId: exercise.muscles[0],
+
+            defaultReps: exercise.defaultReps != undefined ? exercises.defaultReps : 0,
+            defaultSeries: exercise.defaultSeries != undefined ? exercises.defaultSeries : 0,
+            setsDone: exercise.setsDone != undefined ? exercises.setsDone : 0,
             userReps: [],
-            userSeries: exercise.userSeries,
+            userSeries: exercise.userSeries != undefined ? exercises.userSeries : 0,
             weights: []
         }
 
@@ -204,7 +195,7 @@ const FirebaseService = {
 
         var db = firebase.firestore();
 
-        var presetToUpdate = db.collection("presets").doc(preset.presetId);
+        var presetToUpdate = db.collection("presets").doc(presetId);
         // var presetToUpdate = db.collection("presets").doc("XjE5xgESsu5mzuTNwtmb");
 
         // Atomically add a new region to the "exercises" array field.

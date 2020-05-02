@@ -32,7 +32,7 @@
       >
         <md-icon>fitness_center</md-icon>
         <span class="md-list-item-text">{{ preset.presetName }}</span>
-        <md-switch v-if="editionMode" v-model="preset.isPresetAssigned" />
+        <md-switch v-if="editionMode" v-model="preset.isFavouritePreset" />
         <md-button
           v-if="editionMode"
           @click="deletePreset(preset)"

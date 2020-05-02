@@ -99,6 +99,8 @@ const actions = {
 
         editedPreset.exercises.push(preparedExercise)
         console.log(exerciseComposed)
+
+        FirebaseService.addExerciseToPreset(exerciseComposed);
     },
     [REMOVE_EXERCISE_FROM_PRESET](context, exerciseAndPreset) {
         let editedPreset = state.presets
