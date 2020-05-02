@@ -20,7 +20,7 @@
       <form class="md-layout" @submit.prevent>
         <md-card class="md-layout-item md-size-50 md-small-size-100 login-form">
           <md-card-header>
-            <div class="md-title">Users</div>
+            <div class="md-title">Login / Register</div>
           </md-card-header>
 
           <md-card-content>
