@@ -37,6 +37,9 @@ const getters = {
 const actions = {
     [START_CATEGORIES_FETCH](context) {
         state.muscleCategories = null
+        context.commit(SET_CATEGORY_SELECTION, true)
+        context.commit(SET_CHOOSEN_MUSCLE, {})
+
         ExercisesService.getMuscleCategories()
             .then(({ data }) => {
                 context.commit(SET_MUSCLE_CATEGORIES, data.results)
