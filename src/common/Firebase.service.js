@@ -138,6 +138,7 @@ const FirebaseService = {
             console.error("Error adding document: ", error);
         });
 
+        return preset
         //dispatch
     },
     setFavouritePresetValue(preset) {

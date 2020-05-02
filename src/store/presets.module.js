@@ -23,7 +23,7 @@ const state = {
     focusedPreset: null,
     focusedPresetId: null,
     presets: null,
-    expanded: [],
+    expanded: {},
     createDialog: false,
     createdPresetName: '',
     editionMode: false
@@ -77,10 +77,13 @@ const actions = {
             exercises: []
         }
         
-        state.presets.push(preset)
         context.commit(SET_CREATED_PRESET_NAME, '')
 
-        FirebaseService.addPreset(preset);
+        let presetToSave = FirebaseService
+            .addPreset(preset)
+        
+        state.presets.push(presetToSave)
+
     },
     [CANCEL_PRESET_CREATION](context) {
         context.commit(SET_CREATED_PRESET_NAME, '')
