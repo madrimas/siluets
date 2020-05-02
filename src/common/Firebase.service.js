@@ -39,34 +39,31 @@ const FirebaseService = {
             });
 
         let promisePresetsExercises = new Promise(function (resolve) { resolve(presetsExercises) });
+        console.log("promisedObject: ");
         console.log(promisePresetsExercises);
         return promisePresetsExercises;
     },
-    saveTraining(excerciseData) {
+    saveTraining(trainingData) {
         var db = firebase.firestore();
 
-        excerciseData.dateCompleted = new Date();
-        excerciseData.userId = firebase.auth().currentUser.uid;
-        excerciseData.parentPresetId = 1;
+        trainingData.dateCompleted = new Date();
+        trainingData.userId = firebase.auth().currentUser.uid;
 
-        console.log(excerciseData);
+        var newTrainingRef = db.collection("trainings").doc();
 
-        db.collection("trainings").add({
-            dateCompleted: excerciseData.dateCompleted,
-            presetId: excerciseData.presetId,
-            userId: excerciseData.userId,
-            exercises: excerciseData.exercises
+        newTrainingRef.set({
+            trainingId: newTrainingRef.id,
+            dateCompleted: trainingData.dateCompleted,
+            presetId: trainingData.parentPresetId,
+            userId: trainingData.userId,
+            exercises: trainingData.exercises
         })
-        .then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
+        .then(function() {
+            console.log("Document written with ID: ", newTrainingRef.id);
         })
         .catch(function(error) {
             console.error("Error adding document: ", error);
         });
-
-
-
-        //dispatch
     },
     getPresets() {
         var db = firebase.firestore();

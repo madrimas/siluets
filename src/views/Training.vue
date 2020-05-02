@@ -9,7 +9,7 @@
       md-description="Assign preset in presets tab and then use it."
     ></md-empty-state>
     <md-steppers md-vertical v-else-if="exercises.length > 0">
-      <md-step v-for="ex in exercises" :key="ex.id" :md-label="ex.displayName" :md-description="ex.description" 
+      <md-step v-for="ex in exercises" :key="ex.id" :md-label="ex.exerciseName" :md-description="ex.description" 
         v-on:click="changeExercise(ex)">
         <span class="md-subheading">Current set {{ currentSet }}</span>
 

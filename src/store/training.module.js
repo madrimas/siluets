@@ -8,7 +8,8 @@ import {
 } from "./actions.type"
 
 import {
-    SET_CURRENT_SET
+    SET_CURRENT_SET,
+    SET_TRAINING
 } from "./mutations.type"
 
 import FirebaseService from "@/common/Firebase.service"
@@ -18,12 +19,14 @@ const state = {
     currentEx: null,
     currentSet: 1,
     showSnackbar: false,
-    duration: 4000
+    duration: 4000,
+    parentPresetId: null,
+    training: {}
 }
 
 const getters = {
     exercises(state) {
-        return state.exercises
+        return state.training.exercises
     },
     currentExercise(state) {
         return state.currentEx
@@ -36,6 +39,12 @@ const getters = {
     },
     duration(state) {
         return state.duration
+    },
+    parentPresetId(state) {
+        return state.training.parentPresetId
+    },
+    training(state){
+        return state.training
     }
 }
 
@@ -64,15 +73,16 @@ const actions = {
         state.showSnackbar = show
     },
     [TRAINING_PRESET_CHANGE](context, presetNo) {
+        console.log("fetchExercises");
         state.exercises = null
-        //commit fetch from db
-        setTimeout(()=> state.exercises = FirebaseService.getExercises(presetNo), 1000)
-        //in promise callback set state
-        
+        setTimeout(() => FirebaseService.getExercises(presetNo).then(training => {
+            context.commit(SET_TRAINING, training)
+        }), 1000)
     },
     [FINISH_TRAINING] (context) {
         let trainingState = {
-            exercises: state.exercises
+            exercises: state.training.exercises,
+            parentPresetId: state.training.parentPresetId
         }
         FirebaseService.saveTraining(trainingState)
     }
@@ -81,6 +91,9 @@ const actions = {
 const mutations = {
     [SET_CURRENT_SET](state, setNo) {
         state.currentSet = setNo
+    },
+    [SET_TRAINING](state, training) {
+        state.training = training
     }
 }
 
