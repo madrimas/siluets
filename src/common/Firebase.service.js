@@ -99,7 +99,7 @@ const FirebaseService = {
     isUserLoggedIn() {
         //todo: unmock
 
-        return true;
+        // return false;
 
         var user = firebase.auth().currentUser;
 
@@ -114,22 +114,16 @@ const FirebaseService = {
         //     email: "email",
         //     password: "password"
         // }
-        firebase.auth()
-        .signInWithEmailAndPassword(loginData.email, loginData.password)
-        .catch(function(error) {
-            console.log("Login error" + error);
-          });
+        return firebase.auth()
+            .signInWithEmailAndPassword(loginData.email, loginData.password)
     },
     register(registerData) {
         // registerData: {
         //     email: "email",
         //     password: "password"
         // }
-        firebase.auth()
-        .createUserWithEmailAndPassword(registerData.email, registerData.password)
-        .catch(function(error) {
-            console.log("Registration error" + error);
-          });
+        return firebase.auth()
+            .createUserWithEmailAndPassword(registerData.email, registerData.password)
     },
     logout(){
         firebase.auth().signOut().then(function() {

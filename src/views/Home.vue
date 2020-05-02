@@ -26,17 +26,20 @@
           <md-card-content>
             <md-field>
               <label for="email">Email</label>
-              <md-input name="email" id="email" autocomplete="email" />
+              <md-input v-model="email" name="email" id="email" autocomplete="email" />
               <span class="md-error">The first name is required</span>
               <span class="md-error">Invalid first name</span>
             </md-field>
 
             <md-field>
               <label for="password">Password</label>
-              <md-input type="password" name="password" id="password" autocomplete="password" />
+              <md-input v-model="password" type="password" name="password" id="password" autocomplete="password" />
               <span class="md-error">The first name is required</span>
               <span class="md-error">Invalid first name</span>
             </md-field>
+
+            <md-button class="md-primary" @click="login()">Login</md-button>
+            <md-button class="md-accent" @click="register()">Register</md-button>
           </md-card-content>
         </md-card>
       </form>
@@ -48,15 +51,41 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { USER_LOGGED_CHECK } from "@/store/actions.type";
+import { USER_LOGGED_CHECK, USER_LOGIN, USER_REGISTER } from "@/store/actions.type";
+import { SET_EMAIL, SET_PASSWORD } from "@/store/mutations.type";
+
 
 export default {
   name: "home",
   computed: {
-    ...mapGetters(["isUserLoggedIn"])
+    ...mapGetters(["isUserLoggedIn"]),
+    email: {
+      get: function() {
+        return this.$store.getters.email;
+      },
+      set: function(value) {
+        this.$store.commit(SET_EMAIL, value);
+      }
+    },
+    password: {
+      get: function() {
+        return this.$store.getters.password;
+      },
+      set: function(value) {
+        this.$store.commit(SET_PASSWORD, value);
+      }
+    }
   },
   mounted() {
     this.$store.dispatch(USER_LOGGED_CHECK);
+  },
+  methods: {
+    login: function() {
+      this.$store.dispatch(USER_LOGIN)
+    },
+    register: function() {
+      this.$store.dispatch(USER_REGISTER)
+    }
   }
 };
 </script>
@@ -73,7 +102,7 @@ export default {
 .md-layout {
   text-align: center;
 }
-.login-form{
-margin: 0 auto;
+.login-form {
+  margin: 0 auto;
 }
 </style>
