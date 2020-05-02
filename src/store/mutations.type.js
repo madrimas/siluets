@@ -13,3 +13,8 @@ export const SET_PRESETS = "setPresets"
 export const SET_CREATE_DIALOG = "setCreateDialog"
 export const SET_CREATED_PRESET_NAME = "setCreatedPresetName"
 export const SET_EDITION_MODE = "setEditionMode"
+
+//home
+export const SET_USER_LOGGED_IN = "setUserLoggedIn"
+export const SET_EMAIL = "setEmail"
+export const SET_PASSWORD = "setPassword"
