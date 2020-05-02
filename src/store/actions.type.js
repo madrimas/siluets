@@ -23,6 +23,7 @@ export const CONFIRM_PRESET_CREATION = "confirmPresetCreation"
 export const CANCEL_PRESET_CREATION = "cancelPresetCreation"
 export const REMOVE_EXERCISE_FROM_PRESET = "removeExerciseFromPreset"
 export const REMOVE_PRESET = "removePreset"
+export const UPDATE_FAVOURITE_PRESET_FLAG = "updateFavouritePresetFlag"
 
 //shared
 export const ADD_TO_TRAINING = "addToTraining"

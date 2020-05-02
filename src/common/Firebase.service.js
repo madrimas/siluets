@@ -141,7 +141,7 @@ const FirebaseService = {
         return preset
         //dispatch
     },
-    setFavouritePresetValue(preset) {
+    updateFavouritePresetFlag(preset) {
         var db = firebase.firestore();
 
         if (preset.isFavouritePreset) {

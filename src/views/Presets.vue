@@ -32,7 +32,7 @@
       >
         <md-icon>fitness_center</md-icon>
         <span class="md-list-item-text">{{ preset.presetName }}</span>
-        <md-switch v-if="editionMode" v-model="preset.isFavouritePreset" />
+        <md-switch v-if="editionMode" v-model="preset.isFavouritePreset" @change="updateFavouritePresetFlag(preset)" />
         <md-button
           v-if="editionMode"
           @click="deletePreset(preset)"
@@ -73,7 +73,8 @@ import {
   CONFIRM_PRESET_CREATION,
   CANCEL_PRESET_CREATION,
   REMOVE_EXERCISE_FROM_PRESET,
-  REMOVE_PRESET
+  REMOVE_PRESET,
+  UPDATE_FAVOURITE_PRESET_FLAG
 } from "@/store/actions.type";
 import {
   SET_CREATE_DIALOG,
@@ -118,6 +119,9 @@ export default {
     },
     deletePreset: function(preset) {
       this.$store.dispatch(REMOVE_PRESET, preset);
+    },
+    updateFavouritePresetFlag: function(preset) {
+      this.$store.dispatch(UPDATE_FAVOURITE_PRESET_FLAG, preset);
     }
   },
   computed: {

@@ -6,7 +6,8 @@ import {
     CANCEL_PRESET_CREATION,
     ADD_TO_TRAINING,
     REMOVE_EXERCISE_FROM_PRESET,
-    REMOVE_PRESET
+    REMOVE_PRESET,
+    UPDATE_FAVOURITE_PRESET_FLAG
 } from "./actions.type"
 
 import {
@@ -133,6 +134,9 @@ const actions = {
         }
         //secondly 
         FirebaseService.removePreset(preset);
+    },
+    [UPDATE_FAVOURITE_PRESET_FLAG](context, preset){
+        FirebaseService.updateFavouritePresetFlag(preset);
     }
 }
 
