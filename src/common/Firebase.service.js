@@ -99,7 +99,7 @@ const FirebaseService = {
     isUserLoggedIn() {
         //todo: unmock
 
-        // return false;
+        return false;
 
         var user = firebase.auth().currentUser;
 

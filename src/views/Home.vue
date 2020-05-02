@@ -16,9 +16,9 @@
         <h3 class="md-title">Siluets</h3>
       </md-app-toolbar>
     </md-app>
-    <div v-if="!isUserLoggedIn" class="login-form">
+    <div v-if="!isUserLoggedIn">
       <form class="md-layout">
-        <md-card class="md-layout-item md-size-50 md-small-size-100">
+        <md-card class="md-layout-item md-size-50 md-small-size-100 login-form">
           <md-card-header>
             <div class="md-title">Users</div>
           </md-card-header>
@@ -33,7 +33,13 @@
 
             <md-field>
               <label for="password">Password</label>
-              <md-input v-model="password" type="password" name="password" id="password" autocomplete="password" />
+              <md-input
+                v-model="password"
+                type="password"
+                name="password"
+                id="password"
+                autocomplete="password"
+              />
               <span class="md-error">The first name is required</span>
               <span class="md-error">Invalid first name</span>
             </md-field>
@@ -51,9 +57,12 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { USER_LOGGED_CHECK, USER_LOGIN, USER_REGISTER } from "@/store/actions.type";
+import {
+  USER_LOGGED_CHECK,
+  USER_LOGIN,
+  USER_REGISTER
+} from "@/store/actions.type";
 import { SET_EMAIL, SET_PASSWORD } from "@/store/mutations.type";
-
 
 export default {
   name: "home",
@@ -81,10 +90,10 @@ export default {
   },
   methods: {
     login: function() {
-      this.$store.dispatch(USER_LOGIN)
+      this.$store.dispatch(USER_LOGIN);
     },
     register: function() {
-      this.$store.dispatch(USER_REGISTER)
+      this.$store.dispatch(USER_REGISTER);
     }
   }
 };
@@ -103,6 +112,8 @@ export default {
   text-align: center;
 }
 .login-form {
-  margin: 0 auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
