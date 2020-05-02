@@ -5,7 +5,7 @@
       <bar-chart :chart-data="barChartData" />
     </div>
     <div class="column">
-      <doughnut-chart />
+      <doughnut-chart :chart-data="doughnutChartData"/>
     </div>
     <div class="column"></div>
     <div class="column"></div>
@@ -24,21 +24,27 @@ export default {
   },
   data() {
     return {
-      barChartData: null,
+      barChartData: new Object(),
       doughnutChartData: null
     };
   },
   methods: {
     getBarChartData() {
-      let result = FirebaseService.getExercises(2);
-      console.log(result);
+      // FirebaseService.getPresets().then(result => console.log(result));
       this.barChartData = {
-        // FirebaseService.getExercises(1);
+        labels: ['Trening', 'hehe'],
+        datasets: [
+          {
+            label: ["Trainings"],
+            backgroundColor: ["#f87979", "#d4af37"],
+            data: [5, 4]
+          }
+        ]
       };
     }
   },
   mounted() {
-    this.getBarChartData();
+    this.getBarChartData()
   }
 };
 </script>
