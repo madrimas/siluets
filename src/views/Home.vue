@@ -17,21 +17,21 @@
       </md-app-toolbar>
     </md-app>
     <div v-if="!isUserLoggedIn">
-      <form class="md-layout">
+      <form class="md-layout" @submit.prevent>
         <md-card class="md-layout-item md-size-50 md-small-size-100 login-form">
           <md-card-header>
             <div class="md-title">Users</div>
           </md-card-header>
 
           <md-card-content>
-            <md-field>
+            <md-field :class="getValidationClass('email')">
               <label for="email">Email</label>
               <md-input v-model="email" name="email" id="email" autocomplete="email" />
-              <span class="md-error">The first name is required</span>
-              <span class="md-error">Invalid first name</span>
+              <span class="md-error" v-if="!$v.form.email.required">The email is required</span>
+              <span class="md-error" v-else-if="!$v.form.email.email">Invalid email</span>
             </md-field>
 
-            <md-field>
+            <md-field :class="getValidationClass('password')">
               <label for="password">Password</label>
               <md-input
                 v-model="password"
@@ -40,12 +40,15 @@
                 id="password"
                 autocomplete="password"
               />
-              <span class="md-error">The first name is required</span>
-              <span class="md-error">Invalid first name</span>
+              <span class="md-error" v-if="!$v.form.password.required">The password is required</span>
+              <span
+                class="md-error"
+                v-else-if="!$v.form.password.minLength"
+              >Password should have at least 5 characters</span>
             </md-field>
 
-            <md-button class="md-primary" @click="login()">Login</md-button>
-            <md-button class="md-accent" @click="register()">Register</md-button>
+            <md-button type="submit" class="md-primary" @click="login()">Login</md-button>
+            <md-button type="submit" class="md-accent" @click="register()">Register</md-button>
           </md-card-content>
         </md-card>
       </form>
@@ -63,9 +66,17 @@ import {
   USER_REGISTER
 } from "@/store/actions.type";
 import { SET_EMAIL, SET_PASSWORD } from "@/store/mutations.type";
+import { validationMixin } from "vuelidate";
+import {
+  required,
+  email,
+  minLength,
+  maxLength
+} from "vuelidate/lib/validators";
 
 export default {
   name: "home",
+  mixins: [validationMixin],
   computed: {
     ...mapGetters(["isUserLoggedIn"]),
     email: {
@@ -90,10 +101,40 @@ export default {
   },
   methods: {
     login: function() {
-      this.$store.dispatch(USER_LOGIN);
+      if (this.validateForm()) {
+        this.$store.dispatch(USER_LOGIN);
+      }
     },
     register: function() {
-      this.$store.dispatch(USER_REGISTER);
+      if (this.validateForm()) {
+        this.$store.dispatch(USER_REGISTER);
+      }
+    },
+    getValidationClass: function(fieldName) {
+      const field = this.$v.form[fieldName];
+
+      if (field) {
+        return {
+          "md-invalid": field.$invalid && field.$dirty
+        };
+      }
+    },
+    validateForm: function() {
+      this.$v.$touch();
+
+      return this.$v.$invalid;
+    }
+  },
+  validations: {
+    form: {
+      email: {
+        required,
+        email
+      },
+      password: {
+        required,
+        minLength: minLength(5)
+      }
     }
   }
 };

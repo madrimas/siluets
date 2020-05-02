@@ -97,10 +97,6 @@ const FirebaseService = {
         return promise;
     },
     isUserLoggedIn() {
-        //todo: unmock
-
-        return false;
-
         var user = firebase.auth().currentUser;
 
         if (user) {
@@ -110,18 +106,10 @@ const FirebaseService = {
         }
     },
     login(loginData) {
-        // loginData: {
-        //     email: "email",
-        //     password: "password"
-        // }
         return firebase.auth()
             .signInWithEmailAndPassword(loginData.email, loginData.password)
     },
     register(registerData) {
-        // registerData: {
-        //     email: "email",
-        //     password: "password"
-        // }
         return firebase.auth()
             .createUserWithEmailAndPassword(registerData.email, registerData.password)
     },
