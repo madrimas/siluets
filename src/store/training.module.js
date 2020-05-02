@@ -80,8 +80,18 @@ const actions = {
         }), 1000)
     },
     [FINISH_TRAINING] (context) {
+        let exercisesTemp = JSON.parse(JSON.stringify(state.training.exercises))
+        exercisesTemp.forEach((exercise, i) => {
+            let userReps = exercise.userReps;
+            let weights = exercise.weights;
+            if(userReps[userReps.length - 1] === null || weights[weights.length - 1] === null) {
+                exercisesTemp[i].userReps = userReps.filter(rep => rep !== null)
+                exercisesTemp[i].weights = weights.filter(wei => wei !== null)
+            }
+        })
+        
         let trainingState = {
-            exercises: state.training.exercises,
+            exercises: exercisesTemp,
             parentPresetId: state.training.parentPresetId
         }
         FirebaseService.saveTraining(trainingState)
