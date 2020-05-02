@@ -32,3 +32,7 @@ export const ADD_TO_TRAINING = "addToTraining"
 export const USER_LOGGED_CHECK = "checkIfUserIsLoggedIn"
 export const USER_LOGIN = "userLogin"
 export const USER_REGISTER = "userRegister"
+
+//measurements
+export const ADD_MEASUREMENT = "addMeasurement"
+export const FETCH_MEASUREMENTS = "fetchMeasurements"

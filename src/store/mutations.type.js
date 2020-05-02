@@ -18,3 +18,6 @@ export const SET_EDITION_MODE = "setEditionMode"
 export const SET_USER_LOGGED_IN = "setUserLoggedIn"
 export const SET_EMAIL = "setEmail"
 export const SET_PASSWORD = "setPassword"
+
+//measurements
+export const SET_MEASUREMENTS = "setMeasurements"
