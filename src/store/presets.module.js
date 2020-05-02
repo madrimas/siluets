@@ -96,7 +96,7 @@ const actions = {
             exerciseName: exerciseComposed.exercise.name
         }
         let editedPreset = state.presets
-                            .find(p => p.presetId === exerciseComposed.presetId)
+                    .find(p => p.presetId === exerciseComposed.presetId)
 
         editedPreset.exercises.push(preparedExercise)
         console.log(exerciseComposed)

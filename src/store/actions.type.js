@@ -28,3 +28,7 @@ export const UPDATE_FAVOURITE_PRESET_FLAG = "updateFavouritePresetFlag"
 //shared
 export const ADD_TO_TRAINING = "addToTraining"
 
+//home
+export const USER_LOGGED_CHECK = "checkIfUserIsLoggedIn"
+export const USER_LOGIN = "userLogin"
+export const USER_REGISTER = "userRegister"

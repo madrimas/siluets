@@ -202,6 +202,30 @@ const FirebaseService = {
         presetToUpdate.update({
             exercises: firebase.firestore.FieldValue.arrayUnion(exerciseToAdd)
         });
+    },
+    isUserLoggedIn() {
+        var user = firebase.auth().currentUser;
+
+        if (user) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+    login(loginData) {
+        return firebase.auth()
+            .signInWithEmailAndPassword(loginData.email, loginData.password)
+    },
+    register(registerData) {
+        return firebase.auth()
+            .createUserWithEmailAndPassword(registerData.email, registerData.password)
+    },
+    logout(){
+        firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+          }).catch(function(error) {
+            console.log("Logout error" + error);
+          });
     }
 
 }
