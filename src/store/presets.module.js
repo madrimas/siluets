@@ -5,7 +5,9 @@ import {
     CONFIRM_PRESET_CREATION,
     CANCEL_PRESET_CREATION,
     ADD_TO_TRAINING,
-    REMOVE_EXERCISE_FROM_PRESET
+    REMOVE_EXERCISE_FROM_PRESET,
+    REMOVE_PRESET,
+    UPDATE_FAVOURITE_PRESET_FLAG
 } from "./actions.type"
 
 import {
@@ -22,7 +24,7 @@ const state = {
     focusedPreset: null,
     focusedPresetId: null,
     presets: null,
-    expanded: [],
+    expanded: {},
     createDialog: false,
     createdPresetName: '',
     editionMode: false
@@ -68,14 +70,21 @@ const actions = {
         //here we should asynchronously get id from db for preset and then update it in whole state
         //so this preset should be added to state as it is, paralely we save it in db
         //any changes will be commited to db after interaction with user
-        state.presets.push({
+        let preset = {
             presetId: null,
             presetName: state.createdPresetName,
-            presetAssigned: 0,
-            isPresetAssigned: false,
+            favouritePresetNo: 0,
+            isFavouritePreset: false,
             exercises: []
-        })
+        }
+        
         context.commit(SET_CREATED_PRESET_NAME, '')
+
+        let presetToSave = FirebaseService
+            .addPreset(preset)
+        
+        state.presets.push(presetToSave)
+
     },
     [CANCEL_PRESET_CREATION](context) {
         context.commit(SET_CREATED_PRESET_NAME, '')
@@ -87,10 +96,12 @@ const actions = {
             exerciseName: exerciseComposed.exercise.name
         }
         let editedPreset = state.presets
-                            .find(p => p.presetId === exerciseComposed.presetId)
+                    .find(p => p.presetId === exerciseComposed.presetId)
 
         editedPreset.exercises.push(preparedExercise)
         console.log(exerciseComposed)
+
+        FirebaseService.addExerciseToPreset(exerciseComposed);
     },
     [REMOVE_EXERCISE_FROM_PRESET](context, exerciseAndPreset) {
         let editedPreset = state.presets
@@ -107,6 +118,25 @@ const actions = {
         if(indexToRemove !== null) {
             editedPreset.exercises.splice(indexToRemove, 1)
         }
+
+        FirebaseService.removeExerciseFromPreset(exerciseAndPreset)
+    }, 
+    [REMOVE_PRESET](context, preset) {
+        //first remove it from vuex store
+        let presetIdToRemove = null;
+        state.presets.forEach((p, i) => {
+            if(p.presetId === preset.presetId) {
+                presetIdToRemove = i;
+            }
+        })
+        if(presetIdToRemove !== null) {
+            state.presets.splice(presetIdToRemove, 1);
+        }
+        //secondly 
+        FirebaseService.removePreset(preset);
+    },
+    [UPDATE_FAVOURITE_PRESET_FLAG](context, preset){
+        FirebaseService.updateFavouritePresetFlag(preset);
     }
 }
 

@@ -32,8 +32,14 @@
       >
         <md-icon>fitness_center</md-icon>
         <span class="md-list-item-text">{{ preset.presetName }}</span>
-        <md-switch v-if="editionMode" v-model="preset.isPresetAssigned" />
-
+        <md-switch v-if="editionMode" v-model="preset.isFavouritePreset" @change="updateFavouritePresetFlag(preset)" />
+        <md-button
+          v-if="editionMode"
+          @click="deletePreset(preset)"
+          class="md-icon-button md-list-action"
+        >
+          <md-icon class="md-primary">delete_outline</md-icon>
+        </md-button>
         <md-list slot="md-expand">
           <md-list-item
             v-for="exercise in preset.exercises"
@@ -41,7 +47,11 @@
             class="md-inset"
           >
             <span class="md-list-item-text">{{ exercise.exerciseName }}</span>
-            <md-button v-if="editionMode" @click="deleteExercise(preset, exercise)" class="md-icon-button md-list-action">
+            <md-button
+              v-if="editionMode"
+              @click="deleteExercise(preset, exercise)"
+              class="md-icon-button md-list-action"
+            >
               <md-icon class="md-primary">delete_outline</md-icon>
             </md-button>
           </md-list-item>
@@ -62,7 +72,9 @@ import {
   START_PRESETS_FETCH,
   CONFIRM_PRESET_CREATION,
   CANCEL_PRESET_CREATION,
-  REMOVE_EXERCISE_FROM_PRESET
+  REMOVE_EXERCISE_FROM_PRESET,
+  REMOVE_PRESET,
+  UPDATE_FAVOURITE_PRESET_FLAG
 } from "@/store/actions.type";
 import {
   SET_CREATE_DIALOG,
@@ -86,13 +98,13 @@ export default {
       this.$store.commit(SET_EDITION_MODE);
     },
     getToRoute: function() {
-      let expandedId = 0;
-
-      this.$store.getters.expanded.forEach((val, i) => {
-        if (val === true) {
-          expandedId = i;
+      let expandedId = null;
+      
+      for (let [key, value] of Object.entries(this.$store.getters.expanded)) {
+        if(value === true) {
+          expandedId = key;
         }
-      });
+      }
 
       this.$router.push({ name: "creator", params: { presetId: expandedId } });
     },
@@ -100,10 +112,16 @@ export default {
       let exerciseAndPreset = {
         preset: preset,
         exercise: exercise
-      }
+      };
 
-      console.log("Delete exercise: ", exerciseAndPreset)
-      this.$store.dispatch(REMOVE_EXERCISE_FROM_PRESET, exerciseAndPreset)
+      console.log("Delete exercise: ", exerciseAndPreset);
+      this.$store.dispatch(REMOVE_EXERCISE_FROM_PRESET, exerciseAndPreset);
+    },
+    deletePreset: function(preset) {
+      this.$store.dispatch(REMOVE_PRESET, preset);
+    },
+    updateFavouritePresetFlag: function(preset) {
+      this.$store.dispatch(UPDATE_FAVOURITE_PRESET_FLAG, preset);
     }
   },
   computed: {
