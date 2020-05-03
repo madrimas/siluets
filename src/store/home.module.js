@@ -16,19 +16,11 @@ import {
 
 const state = {
     isUserLoggedIn: false,
-    email: '',
-    password: ''
 }
 
 const getters = {
     isUserLoggedIn(state) {
         return state.isUserLoggedIn
-    },
-    email(state) {
-        return state.email
-    },
-    password(state) { 
-        return state.password
     }
 }
 
@@ -39,11 +31,7 @@ const actions = {
 
         context.commit(SET_USER_LOGGED_IN, isUserLoggedIn)
     },
-    [USER_LOGIN](context, value) {
-        let loginObj = {
-            email: state.email,
-            password: state.password
-        }
+    [USER_LOGIN](context, loginObj) {
         FirebaseService.login(loginObj)
         .then(() => {
             context.dispatch(USER_LOGGED_CHECK)
@@ -51,11 +39,7 @@ const actions = {
             console.log("Login error" + error);
           });
     },
-    [USER_REGISTER](context, value) {
-        let registerObj = {
-            email: state.email,
-            password: state.password
-        }
+    [USER_REGISTER](context, registerObj) {
         FirebaseService.register(registerObj)
         .then(() => {
             context.dispatch(USER_LOGGED_CHECK)
@@ -68,12 +52,6 @@ const actions = {
 const mutations = {
     [SET_USER_LOGGED_IN](state, value) {
         state.isUserLoggedIn = value
-    },
-    [SET_EMAIL](state, value) {
-        state.email = value
-    },
-    [SET_PASSWORD](state, value) {
-        state.password = value
     }
 }
 
