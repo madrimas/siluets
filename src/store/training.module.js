@@ -73,11 +73,11 @@ const actions = {
         state.showSnackbar = show
     },
     [TRAINING_PRESET_CHANGE](context, presetNo) {
-        console.log("fetchExercises");
+        // console.log("fetchExercises");
         state.exercises = null
-        setTimeout(() => FirebaseService.getExercises(presetNo).then(training => {
+        FirebaseService.getExercises(presetNo).then(training => {
             context.commit(SET_TRAINING, training)
-        }), 1000)
+        })
     },
     [FINISH_TRAINING] (context) {
         let exercisesTemp = JSON.parse(JSON.stringify(state.training.exercises))
