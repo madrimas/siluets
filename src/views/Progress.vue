@@ -7,9 +7,11 @@
       <doughnut-chart :chart-data="doughnutChartData" />
     </div>
     <div class="column">
-      <line-chart :chart-data="lineChartData" />
+      <line-chart :chart-data="measurementChartData" :options="measurementOptions" />
     </div>
-    <div class="column"></div>
+    <div class="column">
+      <line-chart :chart-data="bicepsChartData" :options="biecpsChartOptions" />
+    </div>
   </div>
 </template>
 
@@ -29,7 +31,42 @@ export default {
     return {
       barChartData: new Object(),
       doughnutChartData: new Object(),
-      lineChartData: new Object()
+      measurementChartData: new Object(),
+      bicepsChartData: new Object(),
+      biecpsChartOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+        title: {
+          display: true,
+          text: "Max weight for Biceps Curl"
+        },
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          ]
+        }
+      },
+      measurementOptions: {
+        responsive: true,
+        maintainAspectRatio: false,
+        title: {
+          display: true,
+          text: "User measurement parameters"
+        },
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          ]
+        }
+      }
     };
   },
   methods: {
@@ -93,7 +130,7 @@ export default {
         };
       });
     },
-    getLineChartData() {
+    getMeasurementChartData() {
       FirebaseService.getUserMeasurement().then(result => {
         let chartData = [];
         let chartLabels = [];
@@ -132,7 +169,35 @@ export default {
           }
         });
 
-        this.lineChartData = {
+        this.measurementChartData = {
+          labels: chartLabels,
+          datasets: chartData
+        };
+      });
+    },
+    getBicepsData() {
+      FirebaseService.findMaxWeightForBiceps().then(result => {
+        let chartLabels = [];
+        let chartData = [];
+        result.forEach((element, index) => {
+          chartLabels.push(
+            new Date(element.dateCompleted.seconds * 1000).toLocaleDateString()
+          );
+
+          if (index === 0) {
+            let dataset = {
+              label: "Max weight",
+              data: [element.maxBicepsWeight],
+              borderColor: "#E74C3C",
+              fill: false
+            };
+            chartData.push(dataset);
+          } else {
+            chartData[0].data.push(element.maxBicepsWeight);
+          }
+        });
+
+        this.bicepsChartData = {
           labels: chartLabels,
           datasets: chartData
         };
@@ -141,7 +206,8 @@ export default {
   },
   mounted() {
     this.getBarChartData();
-    this.getLineChartData();
+    this.getMeasurementChartData();
+    this.getBicepsData();
   }
 };
 </script>
