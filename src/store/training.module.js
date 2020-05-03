@@ -34,7 +34,7 @@ const getters = {
     currentSet(state) {
         return state.currentSet
     },
-    showSnackbar(state){
+    showSnackbar(state) {
         return state.showSnackbar
     },
     duration(state) {
@@ -43,21 +43,19 @@ const getters = {
     parentPresetId(state) {
         return state.training.parentPresetId
     },
-    training(state){
+    training(state) {
         return state.training
     }
 }
 
 const actions = {
     [END_SINGLE_SET](context, seriesInfo) {
-        // console.log(state)
         state.currentSet += 1
     },
     [CURRENT_EXERCISE](context, exercise) {
         state.currentEx = exercise
-        // console.log(exercise.userReps.length)
         let userSetsDone = exercise.userReps.length
-        if(userSetsDone == 0) {
+        if (userSetsDone == 0) {
             state.currentSet = 1
             return;
         }
@@ -66,30 +64,30 @@ const actions = {
     [BACK_ONE_SET](context, exercise) {
         console.log(exercise)
         state.currentEx = exercise
-        if(state.currentSet <= 1) return;
+        if (state.currentSet <= 1) return;
         state.currentSet -= 1
     },
     [SHOW_TRAINING_SNACKBAR](context, show) {
         state.showSnackbar = show
     },
     [TRAINING_PRESET_CHANGE](context, presetNo) {
-        // console.log("fetchExercises");
         state.exercises = null
-        FirebaseService.getExercises(presetNo).then(training => {
-            context.commit(SET_TRAINING, training)
-        })
+        FirebaseService.getExercises(presetNo)
+            .then(training => {
+                context.commit(SET_TRAINING, training)
+            })
     },
-    [FINISH_TRAINING] (context) {
+    [FINISH_TRAINING](context) {
         let exercisesTemp = JSON.parse(JSON.stringify(state.training.exercises))
         exercisesTemp.forEach((exercise, i) => {
             let userReps = exercise.userReps;
             let weights = exercise.weights;
-            if(userReps[userReps.length - 1] === null || weights[weights.length - 1] === null) {
+            if (userReps[userReps.length - 1] === null || weights[weights.length - 1] === null) {
                 exercisesTemp[i].userReps = userReps.filter(rep => rep !== null)
                 exercisesTemp[i].weights = weights.filter(wei => wei !== null)
             }
         })
-        
+
         let trainingState = {
             exercises: exercisesTemp,
             parentPresetId: state.training.parentPresetId

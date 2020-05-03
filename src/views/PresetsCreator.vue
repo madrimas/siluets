@@ -31,10 +31,6 @@
           <div class="md-subhead">{{ exercise.license_author }}</div>
         </md-card-header>
 
-        <md-card-media>
-          <!-- <img src="/assets/examples/card-image-1.jpg" alt="People" /> -->
-        </md-card-media>
-
         <md-card-content>{{ exercise.description }}</md-card-content>
 
         <md-card-actions>
@@ -42,6 +38,11 @@
         </md-card-actions>
       </md-card>
     </md-content>
+     <md-empty-state v-if="exercisesInCategory.length === 0" class="md-accent" md-rounded
+      md-icon="clear"
+      md-label="No exercises in this category"
+      md-description="Sorry we don't have any exercises connected to this muscle group"
+    ></md-empty-state>
     <md-speed-dial class="md-bottom-left">
       <md-speed-dial-target to="/presets/">
         <md-icon>keyboard_arrow_left</md-icon>
@@ -111,6 +112,11 @@ export default {
   max-width: 100%;
   max-height: calc(98vh - 60px);
   overflow: auto;
+}
+.center-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 .grid-content {
   display: grid;
