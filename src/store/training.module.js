@@ -62,7 +62,6 @@ const actions = {
         state.currentSet = userSetsDone - 1
     },
     [BACK_ONE_SET](context, exercise) {
-        console.log(exercise)
         state.currentEx = exercise
         if (state.currentSet <= 1) return;
         state.currentSet -= 1
@@ -71,7 +70,6 @@ const actions = {
         state.showSnackbar = show
     },
     [TRAINING_PRESET_CHANGE](context, presetNo) {
-        console.log("fetchExercises");
         state.exercises = null
         FirebaseService.getExercises(presetNo)
             .then(training => {

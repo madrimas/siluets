@@ -62,7 +62,7 @@
         <md-table-cell>{{ measurement.weight }}</md-table-cell>
         <md-table-cell>{{ measurement.waist }}</md-table-cell>
         <md-table-cell>{{ measurement.hips }}</md-table-cell>
-        <md-table-cell>{{ measurement.date.toDate().toLocaleDateString("pl-PL") }}</md-table-cell>
+        <md-table-cell>{{ (measurement.date instanceof Date) ? measurement.date.toLocaleDateString("pl-PL") : measurement.date.toDate().toLocaleDateString("pl-PL") }}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>

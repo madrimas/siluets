@@ -38,7 +38,7 @@
         </md-card-actions>
       </md-card>
     </md-content>
-     <md-empty-state v-if="exercisesInCategory.length === 0" class="md-accent" md-rounded
+     <md-empty-state v-if="exercisesInCategory === null || exercisesInCategory.length === 0" class="md-accent" md-rounded
       md-icon="clear"
       md-label="No exercises in this category"
       md-description="Sorry we don't have any exercises connected to this muscle group"
