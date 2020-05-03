@@ -16,5 +16,9 @@ export const SET_EDITION_MODE = "setEditionMode"
 
 //home
 export const SET_USER_LOGGED_IN = "setUserLoggedIn"
-export const SET_EMAIL = "setEmail"
-export const SET_PASSWORD = "setPassword"
+
+//training
+export const SET_TRAINING = "setTraining"
+
+//measurements
+export const SET_MEASUREMENTS = "setMeasurements"

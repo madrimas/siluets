@@ -15,79 +15,79 @@ const FirebaseService = {
     },
     getExercises(setNo) {
         var db = firebase.firestore();
-
-        let presetsExercises = {
-            parentPresetId: "",
-            exercises: []
-        };
-
         let userId = firebase.auth().currentUser.uid;
 
-        db.collection('presets').where('userId', '==', userId).where('favouritePresetNo', '==', setNo)
+        return db.collection("presets").where('userId', '==', userId).where('favouritePresetNo', '==', setNo)
             .get()
-            .then(function (querySnapshot) {
-                querySnapshot.forEach(function (doc) {
-                    // doc.data() is never undefined for query doc snapshots
-                    let preset = doc.data();
-                    console.log(doc.id, " => ", preset);
-                    presetsExercises.parentPresetId = preset.presetId;
-                    presetsExercises.exercises = preset.exercises;
+            .then(snapshot => {
+                var results = [];
+                snapshot.docs.forEach(doc => {
+                    results.push(doc.id);
+                })
+                var promises = {
+                    parentPresetId: null,
+                    exercises: []
+                };
+                results.forEach(function (id) {
+                    promises =
+                        (db.collection("presets").doc(id).get().then(doc => {
+                            let preset = doc.data();
+                            let training = {
+                                parentPresetId: preset.presetId,
+                                exercises: preset.exercises
+                            }
+                            return training
+                        }));
                 });
+                return Promise.resolve(promises);
             })
             .catch(function (error) {
                 console.log("Error getting documents: ", error);
             });
-
-        let promisePresetsExercises = new Promise(function (resolve) { resolve(presetsExercises) });
-        console.log(promisePresetsExercises);
-        return promisePresetsExercises;
     },
-    saveTraining(excerciseData) {
+    saveTraining(trainingData) {
         var db = firebase.firestore();
 
-        excerciseData.dateCompleted = new Date();
-        excerciseData.userId = firebase.auth().currentUser.uid;
-        excerciseData.parentPresetId = 1;
+        trainingData.dateCompleted = new Date();
+        trainingData.userId = firebase.auth().currentUser.uid;
 
-        console.log(excerciseData);
+        var newTrainingRef = db.collection("trainings").doc();
 
-        db.collection("trainings").add({
-            dateCompleted: excerciseData.dateCompleted,
-            presetId: excerciseData.presetId,
-            userId: excerciseData.userId,
-            exercises: excerciseData.exercises
+        newTrainingRef.set({
+            trainingId: newTrainingRef.id,
+            dateCompleted: trainingData.dateCompleted,
+            presetId: trainingData.parentPresetId,
+            userId: trainingData.userId,
+            exercises: trainingData.exercises
         })
-        .then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
+        .then(function() {
+            console.log("Document written with ID: ", newTrainingRef.id);
         })
         .catch(function(error) {
             console.error("Error adding document: ", error);
         });
-
-
-
-        //dispatch
     },
     getPresets() {
         var db = firebase.firestore();
 
-        let presetsArray = [];
+        let userId = firebase.auth().currentUser.uid;
 
-        db.collection("presets")
+        return db.collection("presets").where('userId', '==', userId)
             .get()
-            .then(function (querySnapshot) {
-                querySnapshot.forEach(function (doc) {
-                    // doc.data() is never undefined for query doc snapshots
-                    console.log(doc.id, " => ", doc.data());
-                    presetsArray.push(doc.data());
+            .then(snapshot => {
+                var results = [];
+                snapshot.docs.forEach(doc => {
+                    results.push(doc.id);
+                })
+                var promises = [];
+                results.forEach(function (id) {
+                    promises.push(db.collection("presets").doc(id).get().then(doc => { return doc.data() }));
                 });
+                return Promise.all(promises);
             })
             .catch(function (error) {
                 console.log("Error getting documents: ", error);
             });
-
-        let promise = new Promise(function (resolve) { resolve(presetsArray) });
-        return promise;
     },
     removeExerciseFromPreset(exerciseAndPreset) {
         console.log(exerciseAndPreset);
@@ -226,6 +226,55 @@ const FirebaseService = {
           }).catch(function(error) {
             console.log("Logout error" + error);
           });
+    },
+    addMeasurement(measurement) {
+        console.log(measurement);
+
+        var db = firebase.firestore();
+
+        var newMeasurementRef = db.collection("measurements").doc();
+
+        measurement.userId = firebase.auth().currentUser.uid;
+        measurement.id = newMeasurementRef.id;
+
+        newMeasurementRef.set({
+            id: measurement.id,
+            userId: measurement.userId,
+            date: measurement.date,
+            hips: measurement.hips,
+            waist: measurement.waist,
+            weight : measurement.weight
+        })
+        .then(function() {
+            console.log("Document written with ID: ", newMeasurementRef.id);
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+
+        return measurement
+    },
+    fetchMeasurements() {
+        var db = firebase.firestore();
+
+        let userId = firebase.auth().currentUser.uid;
+
+        return db.collection("measurements").where('userId', '==', userId)
+            .get()
+            .then(snapshot => {
+                var results = [];
+                snapshot.docs.forEach(doc => {
+                    results.push(doc.id);
+                })
+                var promises = [];
+                results.forEach(function (id) {
+                    promises.push(db.collection("measurements").doc(id).get().then(doc => { return doc.data() }));
+                });
+                return Promise.all(promises);
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
     }
 
 }

@@ -17,7 +17,7 @@
       </md-app-toolbar>
     </md-app>
     <div v-if="!isUserLoggedIn">
-      <form class="md-layout" @submit.prevent>
+      <form class="md-layout" @submit.prevent="validateSingleEntry">
         <md-card class="md-layout-item md-size-50 md-small-size-100 login-form">
           <md-card-header>
             <div class="md-title">Login / Register</div>
@@ -26,7 +26,7 @@
           <md-card-content>
             <md-field :class="getValidationClass('email')">
               <label for="email">Email</label>
-              <md-input v-model="email" name="email" id="email" autocomplete="email" />
+              <md-input v-model="form.email" name="email" id="email" autocomplete="email" />
               <span class="md-error" v-if="!$v.form.email.required">The email is required</span>
               <span class="md-error" v-else-if="!$v.form.email.email">Invalid email</span>
             </md-field>
@@ -34,7 +34,7 @@
             <md-field :class="getValidationClass('password')">
               <label for="password">Password</label>
               <md-input
-                v-model="password"
+                v-model="form.password"
                 type="password"
                 name="password"
                 id="password"
@@ -77,38 +77,45 @@ import {
 export default {
   name: "home",
   mixins: [validationMixin],
-  computed: {
-    ...mapGetters(["isUserLoggedIn"]),
-    email: {
-      get: function() {
-        return this.$store.getters.email;
-      },
-      set: function(value) {
-        this.$store.commit(SET_EMAIL, value);
-      }
-    },
-    password: {
-      get: function() {
-        return this.$store.getters.password;
-      },
-      set: function(value) {
-        this.$store.commit(SET_PASSWORD, value);
-      }
+  data: () => ({
+    form: {
+      email: null,
+      password: null
     }
+  }),
+  computed: {
+    ...mapGetters(["isUserLoggedIn"])
   },
   mounted() {
     this.$store.dispatch(USER_LOGGED_CHECK);
   },
   methods: {
     login: function() {
-      if (this.validateForm()) {
-        this.$store.dispatch(USER_LOGIN);
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+      } else {
+        let loginData = {
+          email: this.form.email,
+          password: this.form.password
+        };
+        this.$store.dispatch(USER_LOGIN, loginData);
       }
     },
     register: function() {
-      if (this.validateForm()) {
-        this.$store.dispatch(USER_REGISTER);
+      this.$v.$touch();
+
+      if (this.$v.$invalid) {
+      } else {
+        let registerData = {
+          email: this.form.email,
+          password: this.form.password
+        };
+        this.$store.dispatch(USER_REGISTER, registerData);
       }
+    },
+    validateSingleEntry: function() {
+      this.$v.$touch();
     },
     getValidationClass: function(fieldName) {
       const field = this.$v.form[fieldName];
@@ -120,9 +127,9 @@ export default {
       }
     },
     validateForm: function() {
-      this.$v.$touch();
-
-      return this.$v.$invalid;
+      // this.$v.$touch();
+      // console.log("Invalid form: ", this.$v.$invalid )
+      // return this.$v.$invalid;
     }
   },
   validations: {
