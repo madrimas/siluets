@@ -99,7 +99,6 @@ const actions = {
                     .find(p => p.presetId === exerciseComposed.presetId)
 
         editedPreset.exercises.push(preparedExercise)
-        console.log(exerciseComposed)
 
         FirebaseService.addExerciseToPreset(exerciseComposed);
     },
