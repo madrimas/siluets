@@ -226,6 +226,55 @@ const FirebaseService = {
           }).catch(function(error) {
             console.log("Logout error" + error);
           });
+    },
+    addMeasurement(measurement) {
+        console.log(measurement);
+
+        var db = firebase.firestore();
+
+        var newMeasurementRef = db.collection("measurements").doc();
+
+        measurement.userId = firebase.auth().currentUser.uid;
+        measurement.id = newMeasurementRef.id;
+
+        newMeasurementRef.set({
+            id: measurement.id,
+            userId: measurement.userId,
+            date: measurement.date,
+            hips: measurement.hips,
+            waist: measurement.waist,
+            weight : measurement.weight
+        })
+        .then(function() {
+            console.log("Document written with ID: ", newMeasurementRef.id);
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+
+        return measurement
+    },
+    fetchMeasurements() {
+        var db = firebase.firestore();
+
+        let userId = firebase.auth().currentUser.uid;
+
+        return db.collection("measurements").where('userId', '==', userId)
+            .get()
+            .then(snapshot => {
+                var results = [];
+                snapshot.docs.forEach(doc => {
+                    results.push(doc.id);
+                })
+                var promises = [];
+                results.forEach(function (id) {
+                    promises.push(db.collection("measurements").doc(id).get().then(doc => { return doc.data() }));
+                });
+                return Promise.all(promises);
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
     }
 
 }
