@@ -1,13 +1,14 @@
 <template>
   <div class="flex-container">
-    <!-- <md-content class="md-primary">Progress</md-content> -->
     <div class="column">
       <bar-chart :chart-data="barChartData" />
     </div>
     <div class="column">
       <doughnut-chart :chart-data="doughnutChartData" />
     </div>
-    <div class="column"></div>
+    <div class="column">
+      <line-chart :chart-data="lineChartData" />
+    </div>
     <div class="column"></div>
   </div>
 </template>
@@ -15,17 +16,20 @@
 <script>
 import BarChart from "@/charts/BarChart";
 import DoughnutChart from "@/charts/DoughnutChart";
+import LineChart from "@/charts/LineChart";
 import FirebaseService from "@/common/Firebase.service";
 
 export default {
   components: {
     BarChart,
-    DoughnutChart
+    DoughnutChart,
+    LineChart
   },
   data() {
     return {
       barChartData: new Object(),
-      doughnutChartData: null
+      doughnutChartData: new Object(),
+      lineChartData: new Object()
     };
   },
   methods: {
@@ -41,7 +45,6 @@ export default {
           "#6C3483",
           "#21618C"
         ];
-        // loop over docs
         let chartDatasets = [];
         let chartLabels = [];
         result.forEach((element, index) => {
@@ -89,10 +92,56 @@ export default {
           datasets: chartDatasets
         };
       });
+    },
+    getLineChartData() {
+      FirebaseService.getUserMeasurement().then(result => {
+        let chartData = [];
+        let chartLabels = [];
+
+        result.forEach((element, index) => {
+          chartLabels.push(
+            new Date(element.date.seconds * 1000).toLocaleDateString()
+          );
+          if (index === 0) {
+            let hipDataset = {
+              label: "Hip",
+              data: [element.hips],
+              borderColor: "#3e95cd",
+              fill: false
+            };
+            let waistDataset = {
+              label: "Waist",
+              data: [element.waist],
+              borderColor: "#8e5ea2",
+              fill: false
+            };
+            let weightDataset = {
+              label: "Weight",
+              data: [element.weight],
+              borderColor: "#c45850",
+              fill: false
+            };
+
+            chartData.push(hipDataset);
+            chartData.push(waistDataset);
+            chartData.push(weightDataset);
+          } else {
+            chartData[0].data.push(element.hips);
+            chartData[1].data.push(element.waits);
+            chartData[2].data.push(element.weight);
+          }
+        });
+
+        this.lineChartData = {
+          labels: chartLabels,
+          datasets: chartData
+        };
+      });
     }
   },
   mounted() {
     this.getBarChartData();
+    this.getLineChartData();
   }
 };
 </script>

@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 exports.calculateButterflyWeights = functions.firestore.document('trainings/{id}').onWrite((snapshot, context) => {
-    const trainingData = snapshot.before.data()
+    const trainingData = snapshot.after.data()
 
     const butterflyExerciseIndex = trainingData.exercises.findIndex(x => x.exerciseName === 'Butterfly reverse')
 
@@ -22,5 +22,19 @@ exports.calculateButterflyWeights = functions.firestore.document('trainings/{id}
 
         return admin.firestore().collection('statistics').doc(trainingData.trainingId).set(data)
     }
+})
 
+exports.measurement = functions.firestore.document('measurements/{id}').onWrite((snapshot, context) => {
+    const measurementData = snapshot.after.data()
+
+    let data = {
+        hips: measurementData.hips,
+        userId: measurementData.userId,
+        waist: measurementData.waist,
+        weight: measurementData.weight,
+        date: measurementData.date,
+        message: 'Measurement statistic'
+    }
+
+    return admin.firestore().collection('statistics').doc(measurementData.id).set(data)
 })
