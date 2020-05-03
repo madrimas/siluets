@@ -3,10 +3,12 @@ Workout diary made for education purposes
 
 # Technological stack
 
-Used technologies and frameworks:
+Used technologies, frameworks and services:
 - [VueJS](https://vuejs.org/v2/) 
 - [VueMaterial](https://vuematerial.io/)
 - [Firebase](https://firebase.google.com/)
+- [wger](https://wger.de/)
+
 
 # Usage
 
