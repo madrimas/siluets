@@ -105,9 +105,9 @@ const FirebaseService = {
     removePreset(preset) {
         var db = firebase.firestore();
 
-        db.collection("presets").doc(preset.presetId).delete().then(function() {
+        db.collection("presets").doc(preset.presetId).delete().then(function () {
             console.log("Document successfully deleted!");
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.error("Error removing document: ", error);
         });
     },
@@ -129,14 +129,14 @@ const FirebaseService = {
             presetName: preset.presetName,
             isFavouritePreset: preset.isFavouritePreset,
             favouritePresetNo: preset.favouritePresetNo,
-            exercises : preset.exercises
+            exercises: preset.exercises
         })
-        .then(function() {
-            console.log("Document written with ID: ", newPresetRef.id);
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-        });
+            .then(function () {
+                console.log("Document written with ID: ", newPresetRef.id);
+            })
+            .catch(function (error) {
+                console.error("Error adding document: ", error);
+            });
 
         return preset
         //dispatch
@@ -203,6 +203,69 @@ const FirebaseService = {
             exercises: firebase.firestore.FieldValue.arrayUnion(exerciseToAdd)
         });
     },
+    getUserButterflyExercise() {
+        var db = firebase.firestore();
+        let userId = firebase.auth().currentUser.uid;
+
+        return db.collection('statistics').where('userId', '==', userId).where('exerciseName', '==', 'Butterfly reverse').orderBy('dateCompleted').limit(4)
+            .get()
+            .then(snapshot => {
+                var results = [];
+                snapshot.docs.forEach(doc => {
+                    results.push(doc.id);
+                })
+                var promises = [];
+                results.forEach(function (id) {
+                    promises.push(db.collection("statistics").doc(id).get().then(doc => { return doc.data() }));
+                });
+                return Promise.all(promises);
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
+    },
+    getUserMeasurement() {
+        var db = firebase.firestore();
+        let userId = firebase.auth().currentUser.uid;
+
+        return db.collection('statistics').where('userId', '==', userId).where('message', '==', 'Measurement statistic').orderBy('date').limit(5)
+            .get()
+            .then(snapshot => {
+                var results = [];
+                snapshot.docs.forEach(doc => {
+                    results.push(doc.id);
+                })
+                var promises = [];
+                results.forEach(function (id) {
+                    promises.push(db.collection("statistics").doc(id).get().then(doc => { return doc.data() }));
+                });
+                return Promise.all(promises);
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
+    },
+    findMaxWeightForBiceps() {
+        var db = firebase.firestore();
+        let userId = firebase.auth().currentUser.uid;
+
+        return db.collection('statistics').where('userId', '==', userId).where('message', '==', 'Max biceps weight for biceps curl exercise').orderBy('dateCompleted').limit(7)
+            .get()
+            .then(snapshot => {
+                var results = [];
+                snapshot.docs.forEach(doc => {
+                    results.push(doc.id);
+                })
+                var promises = [];
+                results.forEach(function (id) {
+                    promises.push(db.collection("statistics").doc(id).get().then(doc => { return doc.data() }));
+                });
+                return Promise.all(promises);
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
+    },
     isUserLoggedIn() {
         var user = firebase.auth().currentUser;
 
@@ -220,10 +283,10 @@ const FirebaseService = {
         return firebase.auth()
             .createUserWithEmailAndPassword(registerData.email, registerData.password)
     },
-    logout(){
-        firebase.auth().signOut().then(function() {
+    logout() {
+        firebase.auth().signOut().then(function () {
             // Sign-out successful.
-          }).catch(function(error) {
+        }).catch(function (error) {
             console.log("Logout error" + error);
           });
     },

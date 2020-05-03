@@ -71,6 +71,7 @@ const actions = {
         state.showSnackbar = show
     },
     [TRAINING_PRESET_CHANGE](context, presetNo) {
+        console.log("fetchExercises");
         state.exercises = null
         FirebaseService.getExercises(presetNo)
             .then(training => {
@@ -87,7 +88,6 @@ const actions = {
                 exercisesTemp[i].weights = weights.filter(wei => wei !== null)
             }
         })
-
         let trainingState = {
             exercises: exercisesTemp,
             parentPresetId: state.training.parentPresetId
