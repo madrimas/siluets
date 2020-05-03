@@ -164,7 +164,7 @@ export default {
             chartData.push(weightDataset);
           } else {
             chartData[0].data.push(element.hips);
-            chartData[1].data.push(element.waits);
+            chartData[1].data.push(element.waist);
             chartData[2].data.push(element.weight);
           }
         });
