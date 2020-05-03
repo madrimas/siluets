@@ -60,12 +60,12 @@ const FirebaseService = {
             userId: trainingData.userId,
             exercises: trainingData.exercises
         })
-        .then(function() {
-            console.log("Document written with ID: ", newTrainingRef.id);
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-        });
+            .then(function () {
+                console.log("Document written with ID: ", newTrainingRef.id);
+            })
+            .catch(function (error) {
+                console.error("Error adding document: ", error);
+            });
     },
     getPresets() {
         var db = firebase.firestore();
@@ -266,6 +266,27 @@ const FirebaseService = {
                 console.log("Error getting documents: ", error);
             });
     },
+    getAllTrainings() {
+        var db = firebase.firestore();
+        let userId = firebase.auth().currentUser.uid;
+
+        return db.collection('trainings').where('userId', '==', userId)
+            .get()
+            .then(snapshot => {
+                var results = [];
+                snapshot.docs.forEach(doc => {
+                    results.push(doc.id);
+                })
+                var promises = [];
+                results.forEach(function (id) {
+                    promises.push(db.collection("trainings").doc(id).get().then(doc => { return doc.data() }));
+                });
+                return Promise.all(promises);
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
+    },
     isUserLoggedIn() {
         var user = firebase.auth().currentUser;
 
@@ -288,7 +309,7 @@ const FirebaseService = {
             // Sign-out successful.
         }).catch(function (error) {
             console.log("Logout error" + error);
-          });
+        });
     },
     addMeasurement(measurement) {
         console.log(measurement);
@@ -306,14 +327,14 @@ const FirebaseService = {
             date: measurement.date,
             hips: measurement.hips,
             waist: measurement.waist,
-            weight : measurement.weight
+            weight: measurement.weight
         })
-        .then(function() {
-            console.log("Document written with ID: ", newMeasurementRef.id);
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-        });
+            .then(function () {
+                console.log("Document written with ID: ", newMeasurementRef.id);
+            })
+            .catch(function (error) {
+                console.error("Error adding document: ", error);
+            });
 
         return measurement
     },

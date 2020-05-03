@@ -9,6 +9,10 @@ export default {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      title: {
+        display:true,
+        text: 'Reps for Butterfly Reverse exercise'
+      },
       scales: {
         yAxes: [{
           stacked: true,
