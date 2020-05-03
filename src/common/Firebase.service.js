@@ -224,6 +224,27 @@ const FirebaseService = {
                 console.log("Error getting documents: ", error);
             });
     },
+    getUserMeasurement() {
+        var db = firebase.firestore();
+        let userId = firebase.auth().currentUser.uid;
+
+        return db.collection('statistics').where('userId', '==', userId).where('message', '==', 'Measurement statistic').orderBy('date').limit(5)
+            .get()
+            .then(snapshot => {
+                var results = [];
+                snapshot.docs.forEach(doc => {
+                    results.push(doc.id);
+                })
+                var promises = [];
+                results.forEach(function (id) {
+                    promises.push(db.collection("statistics").doc(id).get().then(doc => { return doc.data() }));
+                });
+                return Promise.all(promises);
+            })
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
+    },
     isUserLoggedIn() {
         var user = firebase.auth().currentUser;
 
