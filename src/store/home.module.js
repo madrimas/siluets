@@ -27,7 +27,6 @@ const getters = {
 const actions = {
     [USER_LOGGED_CHECK](context, value) {
         let isUserLoggedIn = FirebaseService.isUserLoggedIn()
-        console.log("dupa", isUserLoggedIn)
 
         context.commit(SET_USER_LOGGED_IN, isUserLoggedIn)
     },
