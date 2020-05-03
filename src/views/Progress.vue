@@ -4,13 +4,13 @@
       <bar-chart :chart-data="barChartData" />
     </div>
     <div class="column">
+      <line-chart :chart-data="bicepsChartData" :options="biecpsChartOptions" />
+    </div>
+    <div class="column">
       <doughnut-chart :chart-data="doughnutChartData" />
     </div>
     <div class="column">
       <line-chart :chart-data="measurementChartData" :options="measurementOptions" />
-    </div>
-    <div class="column">
-      <line-chart :chart-data="bicepsChartData" :options="biecpsChartOptions" />
     </div>
   </div>
 </template>
@@ -202,12 +202,66 @@ export default {
           datasets: chartData
         };
       });
+    },
+    getFavouriteExercisesForDoughnutChart() {
+      FirebaseService.getAllTrainings().then(result => {
+        let colorHexArray = ["#82E73C", "#3CD7E7", "#A23CE7"];
+        let chartLabels = [];
+        let chartData = [];
+
+        let allExercises = [];
+        result.forEach(element => {
+          allExercises.push(...element.exercises);
+        });
+        let countExercises = {};
+
+        for (let i = 0; i < allExercises.length; ++i) {
+          var num = allExercises[i].exerciseName;
+          countExercises[num] = countExercises[num]
+            ? countExercises[num] + 1
+            : 1;
+        }
+
+        let sortedExercisesByFavourite = [];
+        for (let exercise in countExercises) {
+          sortedExercisesByFavourite.push([exercise, countExercises[exercise]]);
+        }
+
+        sortedExercisesByFavourite.sort((a, b) => {
+          return b[1] - a[1];
+        });
+
+        for (let i = 0; i < sortedExercisesByFavourite.length; ++i) {
+          if (i >= 3) {
+            break;
+          }
+          chartLabels.push(sortedExercisesByFavourite[i][0]);
+
+          if (i === 0) {
+            let dataset = {
+              label: sortedExercisesByFavourite[i][0],
+              backgroundColor: [colorHexArray[i]],
+              data: [sortedExercisesByFavourite[i][1]]
+            };
+            chartData.push(dataset);
+          } else {
+            chartData[0].data.push(sortedExercisesByFavourite[i][1]);
+            chartData[0].backgroundColor.push(colorHexArray[i]);
+          }
+        }
+
+        this.doughnutChartData = {
+          labels: chartLabels,
+          datasets: chartData
+        };
+      });
     }
   },
   mounted() {
     this.getBarChartData();
     this.getMeasurementChartData();
     this.getBicepsData();
+    this.getFavouriteExercisesForDoughnutChart();
   }
 };
 </script>
