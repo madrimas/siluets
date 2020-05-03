@@ -23,4 +23,7 @@ To build application and deploy it on Github Pages simply run command:
 
     npm run siluets-deploy
 
-Application will be available here: **https://madrimas.github.io/siluets/#/**
+
+Application will be available here: **http://wizard.uek.krakow.pl/~s215913/#/**
+
+Information page will be available here: **https://madrimas.github.io/siluets/#/**

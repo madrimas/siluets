@@ -7,26 +7,42 @@
       :md-stroke="10"
       md-mode="indeterminate"
     ></md-progress-spinner>
-    <md-content class="md-scrollbar">
+    <md-content v-if="muscleCategorySelection" class="md-scrollbar grid-content">
       <md-card class="card" v-for="muscle in muscleCategories" :key="muscle.id" md-with-hover>
         <md-card-media-cover md-text-scrim>
           <md-card-media md-ratio="4:3">
             <img :src="getImgUrl(muscle.name)" alt="Skyscraper" />
           </md-card-media>
-
           <md-card-area>
             <md-card-header>
               <span class="md-title">{{ muscle.name }}</span>
-              <!-- <span class="md-subhead">16/9 image</span> -->
             </md-card-header>
-              <md-card-actions>
-            <md-button class="md-raised md-primary" @click="clickedMuscle(muscle)">Select</md-button>
-          </md-card-actions>
+            <md-card-actions>
+              <md-button class="md-raised md-primary" @click="clickedMuscle(muscle)">Select</md-button>
+            </md-card-actions>
           </md-card-area>
-        
         </md-card-media-cover>
       </md-card>
     </md-content>
+    <md-content v-if="!muscleCategorySelection" class="md-scrollbar muscle-content">
+      <md-card v-for="exercise in exercisesInCategory" :key="exercise.id" class="wide-card">
+        <md-card-header>
+          <div class="md-title">{{ exercise.name }}</div>
+          <div class="md-subhead">{{ exercise.license_author }}</div>
+        </md-card-header>
+
+        <md-card-content>{{ exercise.description }}</md-card-content>
+
+        <md-card-actions>
+          <md-button @click="addToTraining(exercise)">Add to training</md-button>
+        </md-card-actions>
+      </md-card>
+    </md-content>
+     <md-empty-state v-if="exercisesInCategory.length === 0" class="md-accent" md-rounded
+      md-icon="clear"
+      md-label="No exercises in this category"
+      md-description="Sorry we don't have any exercises connected to this muscle group"
+    ></md-empty-state>
     <md-speed-dial class="md-bottom-left">
       <md-speed-dial-target to="/presets/">
         <md-icon>keyboard_arrow_left</md-icon>
@@ -37,12 +53,20 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { START_CATEGORIES_FETCH } from "@/store/actions.type";
+import {
+  START_CATEGORIES_FETCH,
+  HANDLE_MUSCLE_CHOICE,
+  AFTER_CHOOSE_ACTION
+} from "@/store/actions.type";
 
 export default {
   name: "presets-creator",
   computed: {
-    ...mapGetters(["muscleCategories"])
+    ...mapGetters([
+      "muscleCategories",
+      "muscleCategorySelection",
+      "exercisesInCategory"
+    ])
   },
   methods: {
     getImgUrl: function(imgName) {
@@ -50,7 +74,19 @@ export default {
       return require(`@/assets/images/${urlName}.png`).default;
     },
     clickedMuscle: function(muscle) {
-      console.log("You clicked: ", muscle.name);
+      this.$store.dispatch(HANDLE_MUSCLE_CHOICE, muscle);
+      console.log("You clicked: ", muscle);
+    },
+    addToTraining: function(exercise) {
+      let presetId = this.$route.params.presetId;
+
+      let exerciseComposed = {
+            exercise: exercise,
+            presetId: presetId
+        }
+
+      this.$store.dispatch(AFTER_CHOOSE_ACTION, exerciseComposed); //todo: rename to choose_exercise_action or sth
+      this.$router.push({ name: "presets" });
     }
   },
   mounted() {
@@ -60,14 +96,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-//todo: more responsivenes/scalabilty
 .card {
   position: relative;
   width: 320px;
   margin: 4px;
   object-fit: cover;
 }
-.md-content {
+.wide-card {
+  position: relative;
+  margin: 4px;
+  object-fit: cover;
+}
+.muscle-content {
+  margin: 10px;
+  max-width: 100%;
+  max-height: calc(98vh - 60px);
+  overflow: auto;
+}
+.center-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.grid-content {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   grid-gap: 15px;

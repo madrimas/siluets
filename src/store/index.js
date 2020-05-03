@@ -4,6 +4,8 @@ import Vuex from "vuex"
 import training from './training.module'
 import presetCreator from './presetCreator.module'
 import presets from './presets.module'
+import home from './home.module'
+import measurements from './measurements.module'
 
 Vue.use(Vuex);
 
@@ -11,6 +13,8 @@ export default new Vuex.Store({
     modules: {
         training,
         presetCreator,
-        presets
+        presets,
+        home,
+        measurements
     }
 });
