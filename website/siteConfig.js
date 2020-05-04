@@ -41,7 +41,7 @@ const siteConfig = {
     {doc: 'doc1', label: 'Opis projektu'},
     {doc: 'doc2', label: 'Cel aplikacji'},
     {page: 'help', label: 'Prezentacja funkcjonalności'},
-    {blog: true, label: 'Składowe projektu'},
+    {doc: 'doc3', label: 'Składowe projektu'},
   ],
 
   // If you have users set above, you add it here:
