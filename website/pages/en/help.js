@@ -13,38 +13,94 @@ const Container = CompLibrary.Container;
 const GridBlock = CompLibrary.GridBlock;
 
 function Help(props) {
-  const {config: siteConfig, language = ''} = props;
-  const {baseUrl, docsUrl} = siteConfig;
+  const { config: siteConfig, language = '' } = props;
+  const { baseUrl, docsUrl } = siteConfig;
   const docsPart = `${docsUrl ? `${docsUrl}/` : ''}`;
   const langPart = `${language ? `${language}/` : ''}`;
-  const docUrl = doc => `${baseUrl}${docsPart}${langPart}${doc}`;
 
-  const supportLinks = [
+  const ApplicationInfo = [
     {
-      content: `Learn more using the [documentation on this site.](${docUrl(
-        'doc1.html',
-      )})`,
-      title: 'Browse Docs',
+      content: 'Podstrona przedstawia logowanie się do aplikacji, jest to strona startowa',
+      title: 'Panel logowania',
+      image: siteConfig.baseUrl + 'img/screens/image4.png',
+      imageAlign: 'bottom'
     },
     {
-      content: 'Ask questions about the documentation and project',
-      title: 'Join the community',
+      content: 'Podstrona logowania dla wersji mobilnej',
+      title: 'Wersja mobilna',
+      image: siteConfig.baseUrl + 'img/screens/image8.jpg',
+      imageAlign: 'bottom'
     },
     {
-      content: "Find out what's new with this project",
-      title: 'Stay up to date',
+      content: 'Podstrona służąca do zapisu treningu',
+      title: 'Zapis treningu',
+      image: siteConfig.baseUrl + 'img/screens/image6.png',
+      imageAlign: 'bottom'
     },
+    {
+      content: 'Podstrona do zapisu treningu w wersji mobilnej',
+      title: 'Wersja mobilna',
+      image: siteConfig.baseUrl + 'img/screens/image5.jpg',
+      imageAlign: 'bottom'
+    },
+    {
+      content: 'Podstrona pozwalająca na zapis zestawu ćwiczeń treningowych',
+      title: 'Zestaw ćwiczeń treningowych',
+      image: siteConfig.baseUrl + 'img/screens/image3.png',
+      imageAlign: 'bottom'
+    },
+    {
+      content: 'Zapis zestawu ćwiczeń w wersji mobilnej',
+      title: 'Wersja mobilna',
+      image: siteConfig.baseUrl + 'img/screens/image10.jpg',
+      imageAlign: 'bottom'
+    },
+    {
+      content: 'Podstrona pozwalająca na zapis wymiarów ciała',
+      title: 'Pomiar wymiarów ciała',
+      image: siteConfig.baseUrl + 'img/screens/image11.png',
+      imageAlign: 'bottom'
+    },
+    {
+      content: 'Podstrona do pomiaru wymiarów ciała w wersji mobilnej',
+      title: 'Wersja mobilna',
+      image: siteConfig.baseUrl + 'img/screens/image1.jpg',
+      imageAlign: 'bottom'
+    }
   ];
+
+  const ProgressInfo = [
+    {
+      content: 'Podstrona do obserwacji rozwoju tężyzny fizycznej',
+      title: 'Wykresy tężyzny fizycznej',
+      image: siteConfig.baseUrl + 'img/screens/image9.png',
+      imageAlign: 'bottom'
+    },
+    {
+      content: 'Wykresy tężyzny fizycznej w wersji mobilnej',
+      title: 'Wersja mobilna',
+      image: siteConfig.baseUrl + 'img/screens/image2.jpg',
+      imageAlign: 'bottom'
+    },
+    {
+      content: 'Wykresy tężyzny fizycznej w wersji mobilnej',
+      title: 'Wersja mobilna',
+      image: siteConfig.baseUrl + 'img/screens/image7.jpg',
+      imageAlign: 'bottom'
+    }
+  ]
+
 
   return (
     <div className="docMainWrapper wrapper">
       <Container className="mainContainer documentContainer postContainer">
         <div className="post">
           <header className="postHeader">
-            <h1>Need help?</h1>
+            <h1>Funkcjonalności dostępne na stronie</h1>
           </header>
-          <p>This project is maintained by a dedicated group of people.</p>
-          <GridBlock contents={supportLinks} layout="threeColumn" />
+          <p>Projekt oferuje następujące możliwości:</p>
+          <GridBlock contents={ApplicationInfo} layout="twoColumn" />
+          <GridBlock contents={ProgressInfo} layout="threeColumn" />
         </div>
       </Container>
     </div>
