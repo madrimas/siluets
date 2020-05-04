@@ -13,14 +13,11 @@ const Container = CompLibrary.Container;
 const GridBlock = CompLibrary.GridBlock;
 
 function Help(props) {
-  const { config: siteConfig, language = '' } = props;
-  const { baseUrl, docsUrl } = siteConfig;
-  const docsPart = `${docsUrl ? `${docsUrl}/` : ''}`;
-  const langPart = `${language ? `${language}/` : ''}`;
+  const { config: siteConfig } = props;
 
   const ApplicationInfo = [
     {
-      content: 'Podstrona przedstawia logowanie się do aplikacji, jest to strona startowa',
+      content: 'Podstrona przedstawia logowanie się do aplikacji',
       title: 'Panel logowania',
       image: siteConfig.baseUrl + 'img/screens/image4.png',
       imageAlign: 'bottom'
@@ -71,7 +68,7 @@ function Help(props) {
 
   const ProgressInfo = [
     {
-      content: 'Podstrona do obserwacji rozwoju tężyzny fizycznej',
+      content: 'Podstrona do obserwacji rozwoju tężyzny',
       title: 'Wykresy tężyzny fizycznej',
       image: siteConfig.baseUrl + 'img/screens/image9.png',
       imageAlign: 'bottom'
@@ -99,8 +96,8 @@ function Help(props) {
             <h1>Funkcjonalności dostępne na stronie</h1>
           </header>
           <p>Projekt oferuje następujące możliwości:</p>
-          <GridBlock contents={ApplicationInfo} layout="twoColumn" />
-          <GridBlock contents={ProgressInfo} layout="threeColumn" />
+          <GridBlock align="center" contents={ApplicationInfo} layout="twoColumn" />
+          <GridBlock align="center" contents={ProgressInfo} layout="threeColumn" />
         </div>
       </Container>
     </div>
