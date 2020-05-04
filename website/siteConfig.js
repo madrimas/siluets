@@ -23,15 +23,15 @@ const users = [
 const siteConfig = {
   title: 'siluets', // Title for your website.
   tagline: 'Dzienniczek treningowy',
-  url: 'http://wizard.uek.krakow.pl/~s215913/#/', // Your website URL
-  baseUrl: '/', // Base URL for your project */
+  url: 'http://madrimas.github.io', // Your website URL
+  baseUrl: '/siluets/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
 
   // Used for publishing and more
   projectName: 'siluets',
-  organizationName: 'siluets.inc',
+  organizationName: 'madrimas',
   // For top-level user or org sites, the organization is still the same.
   // e.g., for the https://JoelMarcey.github.io site, it would be set like...
   //   organizationName: 'JoelMarcey'
@@ -39,7 +39,7 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     {doc: 'doc1', label: 'Opis projektu'},
-    {doc: 'doc4', label: 'Cel aplikacji'},
+    {doc: 'doc2', label: 'Cel aplikacji'},
     {page: 'help', label: 'Prezentacja funkcjonalności'},
     {blog: true, label: 'Składowe projektu'},
   ],
@@ -91,6 +91,7 @@ const siteConfig = {
   // Open Graph and Twitter card images.
   ogImage: 'img/undraw_online.svg',
   twitterImage: 'img/undraw_tweetstorm.svg',
+  language: "PL",
 
   // For sites with a sizable amount of content, set collapsible to true.
   // Expand/collapse the links and subcategories under categories.

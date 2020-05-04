@@ -60,14 +60,14 @@ class HomeSplash extends React.Component {
 
     return (
       <SplashContainer>
-        <Logo img_src={`${baseUrl}img/undraw_monitor.svg`} />
+        <Logo img_src={`${baseUrl}img/siluets.png`} />
         <div className="inner">
           <ProjectTitle tagline={siteConfig.tagline} title={siteConfig.title} />
-          <PromoSection>
+          {/* <PromoSection>
             <Button href="#try">Try It Out</Button>
             <Button href={docUrl('doc1.html')}>Example Link</Button>
             <Button href={docUrl('doc2.html')}>Example Link 2</Button>
-          </PromoSection>
+          </PromoSection> */}
         </div>
       </SplashContainer>
     );
@@ -93,17 +93,17 @@ class Index extends React.Component {
     );
 
     const FeatureCallout = () => (
-      <div
-        className="productShowcaseSection paddingBottom"
-        style={{textAlign: 'center'}}>
-        <h2>Feature Callout</h2>
-        <MarkdownBlock>These are features of this project</MarkdownBlock>
-      </div>
+      <div/>
+        // className="productShowcaseSection paddingBottom"
+        // style={{textAlign: 'center'}}>
+        /* <h2>Feature Callout</h2> */
+        /* <MarkdownBlock>These are features of this project</MarkdownBlock> */
+      // </div>
     );
 
     const TryOut = () => (
       <Block id="try">
-        {[
+        {/* {[
           {
             content:
               'To make your landing page more attractive, use illustrations! Check out ' +
@@ -113,13 +113,15 @@ class Index extends React.Component {
             imageAlign: 'left',
             title: 'Wonderful SVG Illustrations',
           },
-        ]}
+        ]} */}
       </Block>
     );
 
     const Description = () => (
-      <Block background="dark">
-        {[
+      <div/>
+
+      // <Block background="dark">
+        /* {[
           {
             content:
               'This is another description of how this project is useful',
@@ -127,13 +129,15 @@ class Index extends React.Component {
             imageAlign: 'right',
             title: 'Description',
           },
-        ]}
-      </Block>
+        ]} */
+      // </Block>
     );
 
     const LearnHow = () => (
-      <Block background="light">
-        {[
+      <div/>
+
+      // <Block background="light">
+        /* {[
           {
             content:
               'Each new Docusaurus project has **randomly-generated** theme colors.',
@@ -141,13 +145,14 @@ class Index extends React.Component {
             imageAlign: 'right',
             title: 'Randomly Generated Theme Colors',
           },
-        ]}
-      </Block>
+        ]} */
+      // </Block>
     );
 
     const Features = () => (
-      <Block layout="fourColumn">
-        {[
+      <div/>
+      // <Block layout="fourColumn">
+        /* {[
           {
             content: 'This is the content of my feature',
             image: `${baseUrl}img/undraw_react.svg`,
@@ -160,8 +165,8 @@ class Index extends React.Component {
             imageAlign: 'top',
             title: 'Feature Two',
           },
-        ]}
-      </Block>
+        ]} */
+      // </Block>
     );
 
     const Showcase = () => {
@@ -181,14 +186,14 @@ class Index extends React.Component {
 
       return (
         <div className="productShowcaseSection paddingBottom">
-          <h2>Who is Using This?</h2>
+          {/* <h2>Who is Using This?</h2>
           <p>This project is used by all these people</p>
           <div className="logos">{showcase}</div>
           <div className="more-users">
             <a className="button" href={pageUrl('users.html')}>
               More {siteConfig.title} Users
             </a>
-          </div>
+          </div> */}
         </div>
       );
     };
