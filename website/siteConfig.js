@@ -39,7 +39,7 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     {doc: 'doc1', label: 'Opis projektu'},
-    {doc: 'doc4', label: 'Cel aplikacji'},
+    {doc: 'doc2', label: 'Cel aplikacji'},
     {page: 'help', label: 'Prezentacja funkcjonalności'},
     {blog: true, label: 'Składowe projektu'},
   ],
@@ -91,6 +91,7 @@ const siteConfig = {
   // Open Graph and Twitter card images.
   ogImage: 'img/undraw_online.svg',
   twitterImage: 'img/undraw_tweetstorm.svg',
+  language: "PL",
 
   // For sites with a sizable amount of content, set collapsible to true.
   // Expand/collapse the links and subcategories under categories.
