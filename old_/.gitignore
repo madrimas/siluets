@@ -1,0 +1,6 @@
+node_modules
+siluets.code-workspace
+yarn-error.log
+dist
+src/config/firebase.config.js
+.VSCodeCounter
