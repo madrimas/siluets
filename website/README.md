@@ -196,3 +196,10 @@ For more information about custom pages, click [here](https://docusaurus.io/docs
 # Full Documentation
 
 Full documentation can be found on the [website](https://docusaurus.io/).
+
+# Publish on GitHub Pages
+
+1. Checkout presentation branch
+2. Go to the website directory
+3. yarn build
+4. GIT_USER=madrimas CURRENT_BRANCH=presentation npm run publish-gh-pages
