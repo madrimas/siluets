@@ -1,5 +1,5 @@
 ---
-id: doc2
+id: goal
 title: Cel aplikacji
 sidebar_label: Cel aplikacji
 ---

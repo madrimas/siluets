@@ -1,5 +1,5 @@
 ---
-id: doc1
+id: description
 title: Opis projektu
 sidebar_label: Opis projektu
 ---

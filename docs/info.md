@@ -1,5 +1,5 @@
 ---
-id: doc3
+id: info
 title: Składowe projektu
 sidebar_label: Składowe projektu
 ---
